@@ -1,11 +1,11 @@
-package de.ait_tr.repositories;
+package de.ait_tr.services;
 
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.ProductInBasketDTO;
 
 import java.util.List;
 
-public interface ProductRepository {
+public interface ProductService {
     List<ProductDTO> findAll();
 
     List<ProductDTO> findAllElectronics();
@@ -19,6 +19,4 @@ public interface ProductRepository {
     ProductDTO find(String titlePart);
 
     boolean buy(ProductInBasketDTO productInBasketDTO);
-
-
 }

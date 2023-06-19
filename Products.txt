@@ -1,5 +1,4 @@
-ID,Product Name,Price,Category,Quantity,Markup,Description
-ELC0001,Electronics-1,iPhone 12,799,Electronics,8,10,"Powerful and stylish smartphone with advanced features."
+ELC0001;iPhone 12;ELC;799,00;12;10;Powerful and stylish smartphone with advanced features.;
 ELC0002,Electronics-2,Samsung Galaxy Watch,299,Electronics,12,20,"Intelligent watch with fitness tracking and smart assistant features."
 ELC0003,Electronics-3,PlayStation 5,499,Electronics,4,30,"The latest gaming console with stunning graphics and capabilities."
 ELC0004,Electronics-4,Canon EOS Rebel T7,599,Electronics,6,15,"Professional camera with high resolution and multiple functions."

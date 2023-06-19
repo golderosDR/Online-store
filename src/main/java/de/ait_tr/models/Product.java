@@ -1,32 +1,25 @@
 package de.ait_tr.models;
 
-import de.ait_tr.models.Category;
-
 public class Product {
+    private final String id;
+    private final String title;
+    private final Category category;
+    private final double basicPrice;
+    private final int markup;
+    private int amount;
+    private final String description;
 
-    private Category category;
-    private String title;
-    private double price;
-    private double margin;
-    private String subscription;
-    private int quantity;
-
-    public Product(String title, double price, double margin, String subscription, int quantity) {
+    public Product(String id, String title, Category category, double basicPrice, int markup, int amount, String description) {
+        this.id = id;
         this.title = title;
-        this.price = price;
-        this.margin = margin;
-        this.subscription = subscription;
-        this.quantity = quantity;
+        this.category = category;
+        this.basicPrice = basicPrice;
+        this.markup = markup;
+        this.amount = amount;
+        this.description = description;
     }
 
-    public void setMargin(double margin) {
-        this.margin = margin;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
+    public String getId() { return id; }
 
     public Category getCategory() {
         return category;
@@ -36,33 +29,22 @@ public class Product {
         return title;
     }
 
-    public double getPrice() {
-        return price;
+    public double getBasicPrice() {
+        return basicPrice;
     }
 
-    public double getMargin() {
-        return margin;
+    public double getMarkup() {
+        return markup;
     }
 
-    public String getSubscription() {
-        return subscription;
+    public String getDescription() {
+        return description;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAmount() {
+        return amount;
     }
 
 
-    @Override
-    public String toString() {
-        return "product{" +
-                "category=" + category +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                ", margin=" + margin +
-                ", subscription='" + subscription + '\'' +
-                ", quantity=" + quantity +
-                '}';
-    }
 }
 
