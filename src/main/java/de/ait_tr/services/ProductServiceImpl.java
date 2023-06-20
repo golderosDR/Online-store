@@ -7,7 +7,7 @@ import de.ait_tr.repositories.ProductRepository;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
-private final ProductRepository  productRepository;
+    private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -39,7 +39,37 @@ private final ProductRepository  productRepository;
     }
 
     @Override
-    public ProductDTO find(String titlePart) {
+    public List<ProductDTO> findAllNotebooks() {
+        return productRepository.findAllNotebooks();
+    }
+
+    @Override
+    public List<ProductDTO> findAllTablets() {
+        return productRepository.findAllTablets();
+    }
+
+    @Override
+    public List<ProductDTO> findAllTVs() {
+        return productRepository.findAllTVs();
+    }
+
+    @Override
+    public List<ProductDTO> findAllBags() {
+        return productRepository.findAllBags();
+    }
+
+    @Override
+    public List<ProductDTO> findAllGlasses() {
+        return productRepository.findAllGlasses();
+    }
+
+    @Override
+    public List<ProductDTO> findAllBelts() {
+        return productRepository.findAllBelts();
+    }
+
+    @Override
+    public List<ProductDTO> find(String titlePart) {
         return productRepository.find(titlePart);
     }
 

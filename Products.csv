@@ -1,39 +1,38 @@
-id;title;category;price;markup;amount;description
 SMF0001;iPhone 12;SMF;799.00;8;10;Powerful and stylish smartphone with advanced features.
 SMF0002;Samsung Galaxy S21;SMF;899.00;8;10;High-performance smartphone with a stunning display.
 SMF0003;Google Pixel 5;SMF;699.00;8;10;Flagship smartphone with a top-notch camera system.
 SMF0004;iPhone SE;SMF;399.00;8;10;Compact and affordable iPhone with impressive performance.
 SMF0005;OnePlus 9 Pro;SMF;999.00;8;10;Premium Android smartphone with a smooth user experience.
-TV0001;LG OLED CX Series;TV;1499.00;10;5;High-quality OLED TV with vivid colors and deep blacks.
-TV0002;Sony X900H;TV;1299.00;10;5;4K HDR TV with impressive picture quality and smart features.
-TV0003;Samsung Q90T;TV;1599.00;10;5;QLED TV with exceptional brightness and immersive viewing experience.
-TV0004;TCL 6-Series;TV;799.00;10;5;Affordable 4K TV with excellent picture performance and Roku platform.
-TV0005;Vizio M-Series;TV;699.00;10;5;Smart TV with a modern design and vibrant visuals.
-NTE0001;Dell XPS 15;NTE;1699.00;15;8;Powerful and sleek laptop for productivity and multimedia tasks.
-NTE0002;Apple MacBook Pro;NTE;1999.00;15;8;High-performance MacBook with a stunning Retina display.
-NTE0003;Lenovo ThinkPad X1 Carbon;NTE;1399.00;15;8;Business laptop with durability and security features.
-NTE0004;HP Spectre x360;NTE;1299.00;15;8;Convertible laptop with a touch display and long battery life.
-NTE0005;Asus ZenBook 14;NTE;999.00;15;8;Ultra-slim laptop with a powerful processor and premium design.
+TVS0001;LG OLED CX Series;TVS;1499.00;10;5;High-quality OLED TVS with vivid colors and deep blacks.
+TVS0002;Sony X900H;TVS;1299.00;10;5;4K HDR TVS with impressive picture quality and smart features.
+TVS0003;Samsung Q90T;TVS;1599.00;10;5;QLED TVS with exceptional brightness and immersive viewing experience.
+TVS0004;TCL 6-Series;TVS;799.00;10;5;Affordable 4K TVS with excellent picture performance and Roku platform.
+TVS0005;Vizio M-Series;TVS;699.00;10;5;Smart TVS with a modern design and vibrant visuals.
+NTB0001;Dell XPS 15;NTB;1699.00;15;8;Powerful and sleek laptop for productivity and multimedia tasks.
+NTB0002;Apple MacBook Pro;NTB;1999.00;15;8;High-performance MacBook with a stunning Retina display.
+NTB0003;Lenovo ThinkPad X1 Carbon;NTB;1399.00;15;8;Business laptop with durability and security features.
+NTB0004;HP Spectre x360;NTB;1299.00;15;8;Convertible laptop with a touch display and long battery life.
+NTB0005;Asus ZenBook 14;NTB;999.00;15;8;Ultra-slim laptop with a powerful processor and premium design.
 TAB0001;iPad Air;TAB;599.00;12;12;Versatile tablet with a large display and Apple Pencil support.
 TAB0002;Samsung Galaxy Tab S7;TAB;699.00;12;12;Android tablet with a stunning AMOLED display and S Pen.
 TAB0003;Microsoft Surface Pro 7;TAB;899.00;12;12;2-in-1 tablet with a detachable keyboard and Windows 10.
-TAB0004;Amazon Fire HD 10;TAB;149.00;12;12;Affordable tablet with a vibrant display and access to Amazon services.
+TAB0004;Amazon Fire HD 10;TAB;149.00;12;12;Affordable tablet with a vibrant display and ACSess to Amazon services.
 TAB0005;Lenovo Tab M10 Plus;TAB;249.00;12;12;Family-friendly tablet with dual speakers and a kid's mode.
-HLH0001;Fitbit Charge 4;HLH;129.00;20;15;Advanced fitness tracker with built-in GPS and heart rate monitoring.
-HLH0002;NordicTrack T Series Treadmill;HLH;999.00;20;15;High-quality treadmill for home workouts with adjustable incline.
-HLH0003;Bowflex SelectTech Adjustable Dumbbells;HLH;399.00;20;15;Space-saving dumbbells with adjustable weight for versatile strength training.
-HLH0004;Yoga Mat;HLH;29.00;20;15;Comfortable and durable mat for yoga and exercise routines.
-HLH0005;Resistance Bands Set;HLH;19.00;20;15;Versatile set of resistance bands for strength and mobility workouts.
-ACC0001;Wireless Earbuds;ACC;99.00;25;20;True wireless earbuds with noise cancellation and long battery life.
-ACC0002;Phone Stand;ACC;25.00;25;20;Foldable and portable stand for holding smartphones and tablets.
-ACC0003;Portable Charger;ACC;39.00;25;20;Compact and high-capacity power bank for charging devices on the go.
-ACC0004;Bluetooth Speaker;ACC;59.00;25;20;Portable speaker with premium sound quality and wireless connectivity.
-ACC0005;Car Phone Mount;ACC;19.00;25;20;Sturdy and adjustable mount for securely holding smartphones in the car.
-WTCH0001;Apple Watch Series 6;WTCH;399.00;30;10;"Advanced smartwatch with fitness tracking, ECG, and always-on display."
-WTCH0002;Samsung Galaxy Watch Active2;WTCH;249.00;30;10;Stylish smartwatch with health monitoring and built-in GPS.
-WTCH0003;Fitbit Versa 3;WTCH;229.00;30;10;Versatile smartwatch with built-in GPS and voice assistant.
-WTCH0004;Garmin Fenix 6;WTCH;599.00;30;10;Premium multisport GPS watch with rugged construction and advanced features.
-WTCH0005;Fossil Gen 5 Carlyle;WTCH;279.00;30;10;Classic and elegant smartwatch with Wear OS by Google.
+HLT0001;Fitbit Charge 4;HLT;129.00;20;15;Advanced fitness tracker with built-in GPS and heart rate monitoring.
+HLT0002;NordicTrack T Series Treadmill;HLT;999.00;20;15;High-quality treadmill for home workouts with adjustable incline.
+HLT0003;Bowflex Adjustable Dumbbells;HLT;399.00;20;15;Space-saving dumbbells with adjustable weight for versatile strength training.
+HLT0004;Yoga Mat;HLT;29.00;20;15;Comfortable and durable mat for yoga and exercise routines.
+HLT0005;Resistance Bands Set;HLT;19.00;20;15;Versatile set of resistance bands for strength and mobility workouts.
+ACS0001;Wireless Earbuds;ACS;99.00;25;20;True wireless earbuds with noise cancellation and long battery life.
+ACS0002;Phone Stand;ACS;25.00;25;20;Foldable and portable stand for holding smartphones and tablets.
+ACS0003;Portable Charger;ACS;39.00;25;20;Compact and high-capacity power bank for charging devices on the go.
+ACS0004;Bluetooth Speaker;ACS;59.00;25;20;Portable speaker with premium sound quality and wireless connectivity.
+ACS0005;Car Phone Mount;ACS;19.00;25;20;Sturdy and adjustable mount for securely holding smartphones in the car.
+WCS0001;Apple Watch Series 6;WCS;399.00;30;10;"Advanced smartwatch with fitness tracking, ECG, and always-on display."
+WCS0002;Samsung Galaxy Watch Active2;WCS;249.00;30;10;Stylish smartwatch with health monitoring and built-in GPS.
+WCS0003;Fitbit Versa 3;WCS;229.00;30;10;Versatile smartwatch with built-in GPS and voice assistant.
+WCS0004;Garmin Fenix 6;WCS;599.00;30;10;Premium multisport GPS watch with rugged construction and advanced features.
+WCS0005;Fossil Gen 5 Carlyle;WCS;279.00;30;10;Classic and elegant smartwatch with Wear OS by Google.
 BAG0001;Leather Messenger Bag;BAG;149.00;35;10;Stylish and spacious messenger bag made from genuine leather.
 BAG0002;Backpack;BAG;79.00;35;10;Durable and versatile backpack with multiple compartments for organization.
 BAG0003;Tote Bag;BAG;39.00;35;10;Fashionable and functional tote bag for everyday use or shopping trips.

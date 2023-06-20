@@ -2,7 +2,7 @@ package de.ait_tr.repositories;
 
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.ProductInBasketDTO;
-import de.ait_tr.mapper.Mapper;
+import de.ait_tr.mapper.DTOMapper;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
 
@@ -19,46 +19,38 @@ public class ProductRepositoryImpl implements ProductRepository {
     public ProductRepositoryImpl(String fileName) {
         this.fileName = fileName;
     }
-
     @Override
     public List<ProductDTO> findAll() {
         return getAll()
                 .stream()
-                .map(Mapper::toProductDTO)
+                .map(DTOMapper::toProductDTO)
                 .toList();
     }
-
 
     private List<Product> getAll() {
         try {
             return Files.readAllLines(new File(fileName).toPath())
                     .stream()
-                    .map(Mapper::toProduct)
+                    .map(DTOMapper::toProduct)
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
         }
     }
-
     private List<ProductDTO> filterByCategory(Category category) {
         return getAll()
                 .stream()
                 .filter(product -> product.getCategory().equals(category))
-                .map(Mapper::toProductDTO)
+                .map(DTOMapper::toProductDTO)
                 .toList();
     }
-
     @Override
     public List<ProductDTO> findAllSmartphones() {
         return filterByCategory(Category.SMARTPHONES);
     }
 
     @Override
-    public List<ProductDTO> findAllWatches() {
-        return filterByCategory(Category.WATCHES);
-
-    }
-
+    public List<ProductDTO> findAllWatches() {  return filterByCategory(Category.WATCHES);    }
     @Override
     public List<ProductDTO> findAllAccessories() {
         return filterByCategory(Category.ACCESSORIES);
@@ -109,12 +101,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         //должен вернуть ProductDTO по строке.
         return getAll()
                 .stream()
-                .filter(product ->
-                        (product.getTitle().contains(titlePart) ||
-                                product.getDescription().contains(titlePart) ||
-                                product.getCategory().getDescription().contains(titlePart)
+                .filter(
+                        product -> (product.getTitle().contains(titlePart)
+                                || product.getDescription().contains(titlePart)
+                                || product.getCategory().getDescription().contains(titlePart)
                         ))
-                                .map(Mapper::toProductDTO)
-                                .toList();
+                .map(DTOMapper::toProductDTO)
+                .toList();
     }
 }

@@ -6,12 +6,13 @@ import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
 
 import java.util.Arrays;
+import java.util.List;
 
 
-public class Mapper {
+public class DTOMapper {
     public static String ILLEGAL_FORMAT_OR_DAMAGED_FILE = "Файл содержит элементы неподдерживаемого формата или поврежден.";
     private static final String DELIMITER = ";";
-    private Mapper(){
+    private DTOMapper(){
     }
     public static  Product toProduct(String line) {
         try {
@@ -42,7 +43,27 @@ public class Mapper {
     public static ProductDTO toProductDTO(Product product) {
         return null;
     }
+    public static String toLine(ProductDTO productDTO) {
+        StringBuilder output = new StringBuilder();
+        output.append(productDTO.getTitle())
+                .append(", category ")
+                .append(productDTO.getCategory())
+                .append(", price ")
+                .append(String.format("%.2f",productDTO.getPrice()))
+                .append(".")
+        ;
+        return  output.toString();
+    }
+    public static String toNumeratedProductDTOLines(List<ProductDTO> productDTOList) {
+        int counter = 1;
+        StringBuilder output = new StringBuilder();
+        for (ProductDTO productDTO: productDTOList) {
+            output.append(counter++)
+                    .append(toLine(productDTO));
+        }
+        return output.toString();
+    }
     public static ProductInBasketDTO toProductInBasketDTO(ProductDTO productDTO, int count) {
-        return  new ProductInBasketDTO(productDTO.getId(), count);
+        return  new ProductInBasketDTO(productDTO, count);
     }
 }

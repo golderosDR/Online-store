@@ -7,9 +7,6 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDTO> findAll();
-
-    List<ProductDTO> findAllElectronics();
-
     List<ProductDTO> findAllSmartphones();
 
     List<ProductDTO> findAllWatches();
@@ -17,8 +14,14 @@ public interface ProductService {
     List<ProductDTO> findAllHeath();
 
     List<ProductDTO> findAllAccessories();
+    List<ProductDTO> findAllNotebooks();
+    List<ProductDTO> findAllTablets();
+    List<ProductDTO> findAllTVs();
+    List<ProductDTO> findAllBags();
+    List<ProductDTO> findAllGlasses();
+    List<ProductDTO> findAllBelts();
 
-    ProductDTO find(String titlePart);
+    List<ProductDTO> find(String titlePart);
 
     boolean buy(ProductInBasketDTO productInBasketDTO);
 }

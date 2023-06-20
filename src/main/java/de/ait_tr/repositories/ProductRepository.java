@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface ProductRepository {
     List<ProductDTO> findAll();
-
-
     List<ProductDTO> findAllSmartphones();
     List<ProductDTO> findAllWatches();
     List<ProductDTO> findAllHeath();
