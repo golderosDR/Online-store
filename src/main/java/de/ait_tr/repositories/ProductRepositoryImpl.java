@@ -109,9 +109,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         //должен вернуть ProductDTO по строке.
         return getAll()
                 .stream()
-                .filter(product -> (product.getTitle().contains(titlePart) ||
-                        product.getDescription().contains(titlePart)))
-                .map(Mapper::toProductDTO)
-                .toList();
+                .filter(product ->
+                        (product.getTitle().contains(titlePart) ||
+                                product.getDescription().contains(titlePart) ||
+                                product.categoryDiscriptionToString().contains(titlePart)
+                        ))
+                                .map(Mapper::toProductDTO)
+                                .toList();
     }
 }
