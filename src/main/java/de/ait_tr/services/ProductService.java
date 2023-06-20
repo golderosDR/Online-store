@@ -10,6 +10,8 @@ public interface ProductService {
 
     List<ProductDTO> findAllElectronics();
 
+    List<ProductDTO> findAllSmartphones();
+
     List<ProductDTO> findAllWatches();
 
     List<ProductDTO> findAllHeath();
