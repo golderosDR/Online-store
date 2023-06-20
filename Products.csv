@@ -1,9 +1,9 @@
 id;title;category;price;markup;amount;description
-ELC0001;iPhone 12;ELC;799.00;8;10;Powerful and stylish smartphone with advanced features.
-ELC0002;Samsung Galaxy S21;ELC;899.00;8;10;High-performance smartphone with a stunning display.
-ELC0003;Google Pixel 5;ELC;699.00;8;10;Flagship smartphone with a top-notch camera system.
-ELC0004;iPhone SE;ELC;399.00;8;10;Compact and affordable iPhone with impressive performance.
-ELC0005;OnePlus 9 Pro;ELC;999.00;8;10;Premium Android smartphone with a smooth user experience.
+SMF0001;iPhone 12;SMF;799.00;8;10;Powerful and stylish smartphone with advanced features.
+SMF0002;Samsung Galaxy S21;SMF;899.00;8;10;High-performance smartphone with a stunning display.
+SMF0003;Google Pixel 5;SMF;699.00;8;10;Flagship smartphone with a top-notch camera system.
+SMF0004;iPhone SE;SMF;399.00;8;10;Compact and affordable iPhone with impressive performance.
+SMF0005;OnePlus 9 Pro;SMF;999.00;8;10;Premium Android smartphone with a smooth user experience.
 TV0001;LG OLED CX Series;TV;1499.00;10;5;High-quality OLED TV with vivid colors and deep blacks.
 TV0002;Sony X900H;TV;1299.00;10;5;4K HDR TV with impressive picture quality and smart features.
 TV0003;Samsung Q90T;TV;1599.00;10;5;QLED TV with exceptional brightness and immersive viewing experience.
