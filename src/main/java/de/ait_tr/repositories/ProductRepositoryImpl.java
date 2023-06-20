@@ -39,13 +39,15 @@ public class ProductRepositoryImpl implements ProductRepository {
             throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
         }
     }
-private List<ProductDTO> filterByCategory(Category category){
+
+    private List<ProductDTO> filterByCategory(Category category) {
         return getAll()
                 .stream()
                 .filter(product -> product.getCategory().equals(category))
                 .map(Mapper::toProductDTO)
                 .toList();
-}
+    }
+
     @Override
     public List<ProductDTO> findAllSmartphones() {
         return filterByCategory(Category.SMARTPHONES);

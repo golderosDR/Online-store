@@ -3,28 +3,18 @@ package de.ait_tr.dtos;
 import java.util.Objects;
 
 public class ProductInBasketDTO {
-    private final String title;
     private final String id;
-    private final double price;
     private final int count;
 
-    ProductInBasketDTO(String title, String id, double price, int count) {
-        this.title = title;
+    ProductInBasketDTO(String id, int count) {
         this.id = id;
-        this.price = price;
         this.count = count;
     }
 
-    public String getTitle() {
-        return title;
-    }
+
 
     public String getId() {
         return id;
-    }
-
-    public double getPrice() {
-        return price;
     }
 
     public int getCount() {
@@ -41,6 +31,6 @@ public class ProductInBasketDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, id, price, count);
+        return Objects.hash(id, count);
     }
 }

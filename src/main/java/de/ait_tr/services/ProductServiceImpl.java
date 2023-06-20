@@ -15,36 +15,36 @@ private final ProductRepository  productRepository;
 
     @Override
     public List<ProductDTO> findAll() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
-    public List<ProductDTO> findAllElectronics() {
-        return null;
+    public List<ProductDTO> findAllSmartphones() {
+        return productRepository.findAllSmartphones();
     }
 
     @Override
     public List<ProductDTO> findAllWatches() {
-        return null;
+        return productRepository.findAllWatches();
     }
 
     @Override
     public List<ProductDTO> findAllHeath() {
-        return null;
+        return productRepository.findAllHeath();
     }
 
     @Override
     public List<ProductDTO> findAllAccessories() {
-        return null;
+        return productRepository.findAllAccessories();
     }
 
     @Override
     public ProductDTO find(String titlePart) {
-        return null;
+        return productRepository.find(titlePart);
     }
 
     @Override
     public boolean buy(ProductInBasketDTO productInBasketDTO) {
-        return false;
+        return productRepository.buy(productInBasketDTO);
     }
 }

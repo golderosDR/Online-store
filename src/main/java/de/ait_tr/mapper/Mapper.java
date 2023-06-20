@@ -13,7 +13,7 @@ public class Mapper {
     private static final String DELIMITER = ";";
     private Mapper(){
     }
-    public static   Product toProduct(String line) {
+    public static  Product toProduct(String line) {
         try {
             String[] parsed = line.split(DELIMITER);
             String id = parsed[0];
@@ -42,7 +42,7 @@ public class Mapper {
     public static ProductDTO toProductDTO(Product product) {
         return null;
     }
-    public static ProductInBasketDTO toProductInBasketDTO(ProductDTO productDTO) {
-        return  null;
+    public static ProductInBasketDTO toProductInBasketDTO(ProductDTO productDTO, int count) {
+        return  new ProductInBasketDTO(productDTO.getId(), count);
     }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductBasket {
+
     private List<ProductInBasketDTO> productsInBasket;
     public ProductBasket() {
         this.productsInBasket = new ArrayList<>();

@@ -10,11 +10,8 @@ public interface ProductRepository {
 
 
     List<ProductDTO> findAllSmartphones();
-
     List<ProductDTO> findAllWatches();
-
     List<ProductDTO> findAllHeath();
-
     List<ProductDTO> findAllAccessories();
     List<ProductDTO> findAllNotebooks();
     List<ProductDTO> findAllTablets();
@@ -22,9 +19,6 @@ public interface ProductRepository {
     List<ProductDTO> findAllBags();
     List<ProductDTO> findAllGlasses();
     List<ProductDTO> findAllBelts();
-
-
-
 
     ProductDTO find(String titlePart);
 

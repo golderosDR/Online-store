@@ -61,13 +61,10 @@ public class ProductDTO {
 
     @Override
     public String toString() {
-        return "ProductDTO{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                '}';
+        return String.format("%s, %s,price %.2f",
+                title,
+                category,
+                price
+        );
     }
 }
