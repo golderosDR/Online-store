@@ -20,7 +20,7 @@ public interface ProductRepository {
     List<ProductDTO> findAllGlasses();
     List<ProductDTO> findAllBelts();
 
-    ProductDTO find(String titlePart);
+    List<ProductDTO> find(String titlePart);
 
     boolean buy(ProductInBasketDTO productInBasketDTO);
 

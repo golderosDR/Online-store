@@ -105,7 +105,13 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public ProductDTO find(String titlePart) {
-        return null;
+    public List<ProductDTO> find(String titlePart) {
+        //должен вернуть ProductDTO по строке.
+        return getAll()
+                .stream()
+                .filter(product -> (product.getTitle().contains(titlePart) ||
+                        product.getDescription().contains(titlePart)))
+                .map(Mapper::toProductDTO)
+                .toList();
     }
 }
