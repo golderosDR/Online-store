@@ -112,7 +112,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .filter(product ->
                         (product.getTitle().contains(titlePart) ||
                                 product.getDescription().contains(titlePart) ||
-                                product.categoryDiscriptionToString().contains(titlePart)
+                                product.getCategory().getDescription().contains(titlePart)
                         ))
                                 .map(Mapper::toProductDTO)
                                 .toList();

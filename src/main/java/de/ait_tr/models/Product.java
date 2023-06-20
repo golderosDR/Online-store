@@ -41,10 +41,6 @@ public class Product {
         return description;
     }
 
-    public String categoryDiscriptionToString() {
-        return  category.getDescription();
-    }
-
     public int getAmount() {
         return amount;
     }
