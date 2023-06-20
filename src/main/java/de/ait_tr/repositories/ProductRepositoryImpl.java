@@ -3,12 +3,14 @@ package de.ait_tr.repositories;
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.ProductInBasketDTO;
 import de.ait_tr.mapper.Mapper;
+import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+
 
 public class ProductRepositoryImpl implements ProductRepository {
     private final String fileName;
@@ -26,6 +28,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .toList();
     }
 
+
     private List<Product> getAll() {
         try {
             return Files.readAllLines(new File(fileName).toPath())
@@ -36,25 +39,62 @@ public class ProductRepositoryImpl implements ProductRepository {
             throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
         }
     }
-
+private List<ProductDTO> filterByCategory(Category category){
+        return getAll()
+                .stream()
+                .filter(product -> product.getCategory().equals(category))
+                .map(Mapper::toProductDTO)
+                .toList();
+}
     @Override
-    public List<ProductDTO> findAllElectronics() {
-        return null;
+    public List<ProductDTO> findAllSmartphones() {
+        return filterByCategory(Category.SMARTPHONES);
     }
 
     @Override
     public List<ProductDTO> findAllWatches() {
-        return null;
+        return filterByCategory(Category.WATCHES);
+
     }
 
     @Override
     public List<ProductDTO> findAllAccessories() {
-        return null;
+        return filterByCategory(Category.ACCESSORIES);
+    }
+
+    @Override
+    public List<ProductDTO> findAllNotebooks() {
+        return filterByCategory(Category.NOTEBOOKS);
+    }
+
+    @Override
+    public List<ProductDTO> findAllTablets() {
+        return filterByCategory(Category.TABLETS);
+    }
+
+    @Override
+    public List<ProductDTO> findAllTVs() {
+        return filterByCategory(Category.TVS);
+    }
+
+    @Override
+    public List<ProductDTO> findAllBags() {
+        return filterByCategory(Category.BAGS);
+    }
+
+    @Override
+    public List<ProductDTO> findAllGlasses() {
+        return filterByCategory(Category.GLASSES);
+    }
+
+    @Override
+    public List<ProductDTO> findAllBelts() {
+        return filterByCategory(Category.BELTS);
     }
 
     @Override
     public List<ProductDTO> findAllHeath() {
-        return null;
+        return filterByCategory(Category.HEALTH);
     }
 
     @Override
