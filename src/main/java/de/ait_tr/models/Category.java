@@ -7,7 +7,7 @@ public enum Category {
     GLASSES("GLS", "glasses"),
     HEALTH("HLT", "health"),
     NOTEBOOKS("NTB", "notebooks"),
-    SMARTPHONES("SMP", "smartphones"),
+    SMARTPHONES("SMF", "smartphones"),
     TABLETS("TAB", "tablets"),
     TVS("TVS", "tvs"),
     WATCHES("WCS", "watches");

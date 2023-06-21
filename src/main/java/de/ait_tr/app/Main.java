@@ -9,10 +9,10 @@ public class Main {
         while (true) {
             menu.showMainMenu();
             switch (scanner.next()) {
-                case "1" -> menu.showAllAndChoose();
-                case "2" -> menu.filterByCategoryAndChoose();
-/*                case "3" -> ;
-                case "4" -> ;*/
+                case "1" -> menu.allProductsMenu();
+                case "2" -> menu.filteredByCategoryMenu();
+                case "3" -> menu.findMenu();
+                /*case "4" -> ;*/
                 case "0" -> {
                     System.out.println("Выход...");
                     scanner.close();

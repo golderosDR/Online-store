@@ -69,8 +69,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> find(String titlePart) {
-        return productRepository.find(titlePart);
+    public List<ProductDTO> find(String searchInfo) {
+        return productRepository.find(searchInfo);
     }
 
     @Override

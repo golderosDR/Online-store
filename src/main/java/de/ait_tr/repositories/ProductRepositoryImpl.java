@@ -19,6 +19,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public ProductRepositoryImpl(String fileName) {
         this.fileName = fileName;
     }
+
     @Override
     public List<ProductDTO> findAll() {
         return getAll()
@@ -37,6 +38,7 @@ public class ProductRepositoryImpl implements ProductRepository {
             throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
         }
     }
+
     private List<ProductDTO> filterByCategory(Category category) {
         return getAll()
                 .stream()
@@ -44,13 +46,17 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .map(DTOMapper::toProductDTO)
                 .toList();
     }
+
     @Override
     public List<ProductDTO> findAllSmartphones() {
         return filterByCategory(Category.SMARTPHONES);
     }
 
     @Override
-    public List<ProductDTO> findAllWatches() {  return filterByCategory(Category.WATCHES);    }
+    public List<ProductDTO> findAllWatches() {
+        return filterByCategory(Category.WATCHES);
+    }
+
     @Override
     public List<ProductDTO> findAllAccessories() {
         return filterByCategory(Category.ACCESSORIES);
@@ -97,15 +103,15 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<ProductDTO> find(String titlePart) {
-        //должен вернуть ProductDTO по строке.
+    public List<ProductDTO> find(String searchInfo) {
         return getAll()
                 .stream()
-                .filter(
-                        product -> (product.getTitle().contains(titlePart)
-                                || product.getDescription().contains(titlePart)
-                                || product.getCategory().getDescription().contains(titlePart)
-                        ))
+                .filter(product -> (
+                                product.getTitle().contains(searchInfo)
+                                        || product.getDescription().contains(searchInfo)
+                                /*|| product.getCategory().getDescription().contains(searchInfo)*/
+                        )
+                )
                 .map(DTOMapper::toProductDTO)
                 .toList();
     }

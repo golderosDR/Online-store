@@ -63,6 +63,20 @@ public class DTOMapper {
         ;
         return  output.toString();
     }
+    public static String toLineWithDescription(ProductDTO productDTO) {
+        String output = productDTO.getTitle() + "," +
+                System.lineSeparator() +
+                "category " +
+                productDTO.getCategory() +
+                "," +
+                System.lineSeparator() +
+                "price " +
+                String.format("%.2f", productDTO.getPrice()) +
+                "," +
+                System.lineSeparator() +
+                productDTO.getDescription();
+        return output;
+    }
     public static String toNumeratedProductDTOLines(List<ProductDTO> productDTOList) {
         int counter = 1;
         StringBuilder output = new StringBuilder();
