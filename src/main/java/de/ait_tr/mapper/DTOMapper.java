@@ -41,7 +41,16 @@ public class DTOMapper {
         }
     }
     public static ProductDTO toProductDTO(Product product) {
-        return null;
+      double price = product.getBasicPrice()*(100+product.getMarkup())/100.0;
+      String category = product.getCategory().getDescription();
+        return new ProductDTO(
+                product.getId(),
+                product.getTitle(),
+                category,
+                price,
+                product.getAmount(),
+                product.getDescription()
+        );
     }
     public static String toLine(ProductDTO productDTO) {
         StringBuilder output = new StringBuilder();
