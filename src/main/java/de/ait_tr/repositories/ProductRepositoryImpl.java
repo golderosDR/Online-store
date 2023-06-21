@@ -3,13 +3,17 @@ package de.ait_tr.repositories;
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.ProductInBasketDTO;
 import de.ait_tr.mapper.DTOMapper;
+import de.ait_tr.mapper.ProductMapper;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class ProductRepositoryImpl implements ProductRepository {
@@ -102,12 +106,13 @@ public class ProductRepositoryImpl implements ProductRepository {
         return false;
     }
     //productDTO findByID (String ig)  сделать вызов этого метода в продуктсервисе.
-   // проятнуть из сервиса в репозиторий  см find в 2 интерфейсах и в двух классах должно последовательно вызываться
+    // проятнуть из сервиса в репозиторий  см find в 2 интерфейсах и в двух классах должно последовательно вызываться
     // реализовать Bay  в репозитории. В бай приходит список ДТОшек и возвращает ТРУ/фолс  В бай засунуть сейв.
 
 
     /**
      * find ProductDTO by String
+     *
      * @param searchInfo
      * @return List<ProductDTO>
      */
@@ -126,6 +131,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     /**
      * find ProductDTO  by id
+     *
      * @param id
      * @return List<ProductDTO>
      */
@@ -139,5 +145,20 @@ public class ProductRepositoryImpl implements ProductRepository {
                 )
                 .map(DTOMapper::toProductDTO)
                 .toList().get(0);
+    }
+
+    @Override
+    public void save(List<Product> productList) {
+        String lines = productList
+                .stream()
+                .map(ProductMapper::toLine)
+                .collect(Collectors.joining(System.lineSeparator()));
+
+        try (FileWriter writer = new FileWriter(fileName);
+             BufferedWriter buffWriter = new BufferedWriter(writer)) {
+        buffWriter.write(lines);
+        } catch (IOException e) {
+            throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
+        }
     }
 }

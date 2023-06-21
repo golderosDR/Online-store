@@ -2,6 +2,7 @@ package de.ait_tr.repositories;
 
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.ProductInBasketDTO;
+import de.ait_tr.models.Product;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface ProductRepository {
     List<ProductDTO> findAllBelts();
     List<ProductDTO> find(String searchInfo);
     ProductDTO findById(String id);
-
+    void save(List<Product> productList);
     boolean buy(List<ProductInBasketDTO> productInBasketDTOList);
 
 
