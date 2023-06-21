@@ -21,7 +21,7 @@ public interface ProductRepository {
     List<ProductDTO> find(String searchInfo);
     ProductDTO findById(String id);
     void save(List<Product> productList);
-    boolean buy(List<ProductInBasketDTO> productInBasketDTOList);
+    void buy(List<ProductInBasketDTO> productInBasketDTOList);
 
 
 

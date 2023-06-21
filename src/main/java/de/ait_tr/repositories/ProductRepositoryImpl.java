@@ -101,13 +101,24 @@ public class ProductRepositoryImpl implements ProductRepository {
         return filterByCategory(Category.HEALTH);
     }
 
+    /**
+     * change amount in products for each product from basket
+     * @param productInBasketDTOList
+     */
     @Override
-    public boolean buy(List<ProductInBasketDTO> productInBasketDTOList) {
-        return false;
+    public void buy(List<ProductInBasketDTO> productInBasketDTOList) {
+        List<Product> chanchedProductList = getAll();
+        for (ProductInBasketDTO productInBasketDTO : productInBasketDTOList
+        ) {
+            for (Product product : chanchedProductList
+            ) {
+                if (product.getId().equals(productInBasketDTO.id())) {  //совпадение id
+                    product.setAmount(product.getAmount() - productInBasketDTO.count()); //установили количество
+                }
+            }
+        }
+        save(chanchedProductList);
     }
-    //productDTO findByID (String ig)  сделать вызов этого метода в продуктсервисе.
-    // проятнуть из сервиса в репозиторий  см find в 2 интерфейсах и в двух классах должно последовательно вызываться
-    // реализовать Bay  в репозитории. В бай приходит список ДТОшек и возвращает ТРУ/фолс  В бай засунуть сейв.
 
 
     /**
@@ -156,7 +167,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         try (FileWriter writer = new FileWriter(fileName);
              BufferedWriter buffWriter = new BufferedWriter(writer)) {
-        buffWriter.write(lines);
+            buffWriter.write(lines);
         } catch (IOException e) {
             throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
         }
