@@ -101,7 +101,16 @@ public class ProductRepositoryImpl implements ProductRepository {
     public boolean buy(List<ProductInBasketDTO> productInBasketDTOList) {
         return false;
     }
+    //productDTO findByID (String ig)  сделать вызов этого метода в продуктсервисе.
+   // проятнуть из сервиса в репозиторий  см find в 2 интерфейсах и в двух классах должно последовательно вызываться
+    // реализовать Bay  в репозитории. В бай приходит список ДТОшек и возвращает ТРУ/фолс  В бай засунуть сейв.
 
+
+    /**
+     * find ProductDTO by String
+     * @param searchInfo
+     * @return List<ProductDTO>
+     */
     @Override
     public List<ProductDTO> find(String searchInfo) {
         return getAll()
@@ -109,10 +118,26 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .filter(product -> (
                                 product.getTitle().contains(searchInfo)
                                         || product.getDescription().contains(searchInfo)
-                                /*|| product.getCategory().getDescription().contains(searchInfo)*/
                         )
                 )
                 .map(DTOMapper::toProductDTO)
                 .toList();
+    }
+
+    /**
+     * find ProductDTO  by id
+     * @param id
+     * @return List<ProductDTO>
+     */
+    @Override
+    public ProductDTO findById(String id) {
+        return getAll()
+                .stream()
+                .filter(product -> (
+                                product.getId().equals(id)
+                        )
+                )
+                .map(DTOMapper::toProductDTO)
+                .toList().get(0);
     }
 }

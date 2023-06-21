@@ -22,6 +22,7 @@ public interface ProductService {
     List<ProductDTO> findAllBelts();
 
     List<ProductDTO> find(String searchInfo);
+    ProductDTO findById(String id);
 
     boolean buy(List<ProductInBasketDTO> productInBasketDTOList);
 }

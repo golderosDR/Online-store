@@ -74,6 +74,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductDTO findById(String id) {
+        return productRepository.findById(id);
+    }
+
+    @Override
     public boolean buy(List<ProductInBasketDTO> productInBasketDTOList) {
         return productRepository.buy(productInBasketDTOList);
     }
