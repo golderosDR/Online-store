@@ -1,16 +1,16 @@
 package de.ait_tr.models;
 
 public enum Category {
-    WATCHES("WCS", "watches"),
-    HEALTH("HLT", "health"),
     ACCESSORIES("ACS", "accessories"),
-    SMARTPHONES("SMP", "smartphones"),
-    TVS("TVS", "tvs"),
-    NOTEBOOKS("NTB", "notebooks"),
-    TABLETS("TAB", "tablets"),
     BAGS("BAG", "bags"),
+    BELTS("BLT", "belts"),
     GLASSES("GLS", "glasses"),
-    BELTS("BLT", "belts");
+    HEALTH("HLT", "health"),
+    NOTEBOOKS("NTB", "notebooks"),
+    SMARTPHONES("SMP", "smartphones"),
+    TABLETS("TAB", "tablets"),
+    TVS("TVS", "tvs"),
+    WATCHES("WCS", "watches");
 
     private final String abbreviation;
     private final String description;

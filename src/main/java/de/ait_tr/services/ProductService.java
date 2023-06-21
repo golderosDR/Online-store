@@ -23,5 +23,5 @@ public interface ProductService {
 
     List<ProductDTO> find(String titlePart);
 
-    boolean buy(ProductInBasketDTO productInBasketDTO);
+    boolean buy(List<ProductInBasketDTO> productInBasketDTOList);
 }

@@ -20,7 +20,7 @@ public interface ProductRepository {
 
     List<ProductDTO> find(String titlePart);
 
-    boolean buy(ProductInBasketDTO productInBasketDTO);
+    boolean buy(List<ProductInBasketDTO> productInBasketDTOList);
 
 
 

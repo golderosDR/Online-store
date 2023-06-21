@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean buy(ProductInBasketDTO productInBasketDTO) {
-        return productRepository.buy(productInBasketDTO);
+    public boolean buy(List<ProductInBasketDTO> productInBasketDTOList) {
+        return productRepository.buy(productInBasketDTOList);
     }
 }

@@ -59,7 +59,9 @@ public class DTOMapper {
         StringBuilder output = new StringBuilder();
         for (ProductDTO productDTO: productDTOList) {
             output.append(counter++)
-                    .append(toLine(productDTO));
+                    .append(". ")
+                    .append(toLine(productDTO))
+                    .append(System.lineSeparator());
         }
         return output.toString();
     }

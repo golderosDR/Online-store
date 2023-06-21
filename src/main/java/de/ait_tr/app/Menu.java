@@ -1,6 +1,7 @@
 package de.ait_tr.app;
 
 import de.ait_tr.dtos.ProductDTO;
+import de.ait_tr.mapper.CategoryMapper;
 import de.ait_tr.mapper.DTOMapper;
 import de.ait_tr.models.ProductBasket;
 import de.ait_tr.repositories.ProductRepositoryImpl;
@@ -38,30 +39,19 @@ public class Menu {
         System.out.printf(MAIN_MENU_TEXT + System.lineSeparator(), productBasket.getProductsInBasket().size());
     }
 
-    public void showAll() {
+    public void showAllAndChoose() {
         System.out.println(SORTING_ALL_SUBMENU_TEXT);
         Scanner scanner = new Scanner(System.in);
         List<ProductDTO> tempProductDTOList = new ArrayList<>();
         switch (scanner.next()) {
             case "1" -> printProductDTOList(
-                    tempProductDTOList = productService.findAll()
-                            .stream()
-                            .sorted(Comparator.comparing(ProductDTO::getTitle))
-                            .toList()
+                    tempProductDTOList = getSortedAll(Comparator.comparing(ProductDTO::getTitle))
             );
-
             case "2" -> printProductDTOList(
-                    tempProductDTOList = productService.findAll()
-                            .stream()
-                            .sorted(Comparator.comparing(ProductDTO::getCategory))
-                            .toList()
+                    tempProductDTOList = getSortedAll(Comparator.comparing(ProductDTO::getCategory))
             );
-
             case "3" -> printProductDTOList(
-                    tempProductDTOList = productService.findAll()
-                            .stream()
-                            .sorted(Comparator.comparing(ProductDTO::getPrice))
-                            .toList()
+                    tempProductDTOList = getSortedAll(Comparator.comparing(ProductDTO::getPrice))
             );
             case "0" -> cancel();
             default -> wrongCommand();
@@ -70,8 +60,8 @@ public class Menu {
         switch (scanner.next()) {
             case "1" -> {
                 String command = scanner.next();
-                if (CommandValidator.validate(command) && Integer.parseInt(command) <= tempProductDTOList.size()-1) {
-                    ProductDTO tempProductDTO = tempProductDTOList.get(Integer.parseInt(command));
+                if (CommandValidator.validate(command) && Integer.parseInt(command) < tempProductDTOList.size()) {
+                    ProductDTO tempProductDTO = tempProductDTOList.get(Integer.parseInt(command) - 1);
                     System.out.println(ENTER_NUMBER_OF_PRODUCT_SUBMENU_TEXT);
                     if ((command = scanner.next()).equals("0")) {
                         cancel();
@@ -82,13 +72,59 @@ public class Menu {
                             wrongCommand();
                         }
                     }
-                } else  {
+                } else {
                     wrongCommand();
                 }
             }
             case "0" -> cancel();
             default -> wrongCommand();
         }
+    }
+
+    public void filterByCategoryAndChoose() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf(CHOOSE_CATEGORY_SUBMENU_TEXT + System.lineSeparator(), CategoryMapper.ToLines());
+        List<ProductDTO> tempProductDTOList = new ArrayList<>();
+        switch (scanner.next()) {
+            case "1" -> tempProductDTOList = productService.findAllAccessories();
+            case "2" -> tempProductDTOList = productService.findAllBags();
+            case "3" -> tempProductDTOList = productService.findAllBelts();
+            case "4" -> tempProductDTOList = productService.findAllGlasses();
+            case "5" -> tempProductDTOList = productService.findAllHeath();
+            case "6" -> tempProductDTOList = productService.findAllNotebooks();
+            case "7" -> tempProductDTOList = productService.findAllSmartphones();
+            case "8" -> tempProductDTOList = productService.findAllTablets();
+            case "9" -> tempProductDTOList = productService.findAllTVs();
+            case "10" -> tempProductDTOList = productService.findAllWatches();
+            case "0" -> cancel();
+            default -> wrongCommand();
+        }
+        System.out.println(SORTING_SUBMENU_TEXT);
+        switch (scanner.next()) {
+            case "1" -> System.out.printf(ADD_TO_BASKET_SUBMENU_TEXT + System.lineSeparator(),
+                    DTOMapper.toNumeratedProductDTOLines(
+                            tempProductDTOList.stream()
+                                    .sorted(Comparator.comparing(ProductDTO::getTitle))
+                                    .toList()
+                    ));
+
+            case "2" -> System.out.printf(ADD_TO_BASKET_SUBMENU_TEXT + System.lineSeparator(),
+                    DTOMapper.toNumeratedProductDTOLines(
+                            tempProductDTOList.stream()
+                                    .sorted(Comparator.comparing(ProductDTO::getPrice))
+                                    .toList()
+                    ));
+            case "0" -> cancel();
+            default -> wrongCommand();
+        }
+    }
+
+
+    private List<ProductDTO> getSortedAll(Comparator<ProductDTO> comparing) {
+        return productService.findAll()
+                .stream()
+                .sorted(comparing)
+                .toList();
     }
 
     private void printProductDTOList(List<ProductDTO> productDTOList) {
@@ -104,7 +140,7 @@ public class Menu {
             1. Вывести все продукты.
             2. Вывести продукты по категории.
             3. Поиск продукта по названию.
-            4. Корзина. (%s)
+            4. Корзина(%s).
             0. Выход.""";
     private final static String SORTING_ALL_SUBMENU_TEXT = """
             Отсортировать продукты по:

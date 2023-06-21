@@ -92,7 +92,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public boolean buy(ProductInBasketDTO productInBasketDTO) {
+    public boolean buy(List<ProductInBasketDTO> productInBasketDTOList) {
         return false;
     }
 
