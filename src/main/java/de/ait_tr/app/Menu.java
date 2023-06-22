@@ -46,15 +46,15 @@ public class Menu {
         switch (scanner.next()) {
             case "1" -> {
                 tempProductDTOList = getSortedList(productService.findAll(), Comparator.comparing(ProductDTO::getTitle));
-                choose(tempProductDTOList);
+                chooseToAdd(tempProductDTOList);
             }
             case "2" -> {
                 tempProductDTOList = getSortedList(productService.findAll(), Comparator.comparing(ProductDTO::getCategory));
-                choose(tempProductDTOList);
+                chooseToAdd(tempProductDTOList);
             }
             case "3" -> {
                 tempProductDTOList = getSortedList(productService.findAll(), Comparator.comparing(ProductDTO::getPrice));
-                choose(tempProductDTOList);
+                chooseToAdd(tempProductDTOList);
             }
             case "0" -> cancel();
             default -> wrongCommand();
@@ -126,7 +126,7 @@ public class Menu {
                 if (tempProductDTOList.isEmpty()) {
                     System.out.println("По вашему запросу ничего не найдено.");
                 } else {
-                    choose(tempProductDTOList);
+                    chooseToAdd(tempProductDTOList);
                 }
             }
         }
@@ -134,21 +134,48 @@ public class Menu {
     }
 
     public void basketMenu() {
-        if (productBasket.getProductsInBasket().size() == 0) {
-            System.out.println("Корзина пуста.");
-        } else {
-            System.out.println(basketTOLines());
-        }
+        Scanner scanner = new Scanner(System.in);
+        String temp;
+        do {
+            if (productBasket.getProductsInBasket().isEmpty()) {
+                System.out.println("Корзина пуста.");
+                System.out.println("0. Отмена.");
+                if ((temp = scanner.next()).equals("0")) {
+                    cancel();
+                } else {
+                    wrongCommand();
+                }
+            } else {
+                System.out.println(basketTOLines());
+                System.out.println(BASKET_SUBMENU_TEXT);
+                switch (scanner.next()) {
+                    case "1" -> editBasketMenu();
+                    case "2" -> editCountBasketMenu();
+                    case "0" -> cancel();
+                    default -> wrongCommand();
+                }
+                System.out.println(basketTOLines());
+                System.out.println(BASKET_SUBMENU_TEXT);
+                temp = scanner.next();
+
+            }
+
+
+        } while (!temp.equals("0"));
     }
+
 
     private String basketTOLines() {
         System.out.println("Содержимое корзины:");
         List<InBasketDTO> productsInBasket = productBasket.getProductsInBasket();
         StringBuilder output = new StringBuilder();
         int counter = 1;
+                if (!productBasket.getProductsInBasket().isEmpty()) {
+        ProductDTO temp = productService.findById(productBasket.getProductsInBasket().get(0).getId());
         double totalPrice = 0;
+        int spaceCount = DTOMapper.toLine(temp.getTitle(), temp.getPrice(), productBasket.getProductsInBasket().get(0).getCount()).length() + 3;
         for (InBasketDTO inBasketDTO : productsInBasket) {
-            ProductDTO temp = productService.findById(inBasketDTO.getId());
+            temp = productService.findById(inBasketDTO.getId());
             totalPrice += temp.getPrice() * inBasketDTO.getCount();
             output.append(counter++)
                     .append(". ")
@@ -157,9 +184,13 @@ public class Menu {
         }
         output.append(System.lineSeparator())
                 .append("Total price")
-                .append(" ".repeat(44 - String.valueOf(totalPrice).length()))
+                .append(" ".repeat(spaceCount - ("Total price").length() - String.format("%.2f", totalPrice).length()))
                 .append(String.format("%.2f", totalPrice));
         return output.toString();
+        } else {
+            return "Корзина пуста";
+        }
+
     }
 
 
@@ -171,20 +202,20 @@ public class Menu {
                 tempProductDTOList = getSortedList(tempProductDTOList,
                         Comparator.comparing(ProductDTO::getTitle)
                 );
-                choose(tempProductDTOList);
+                chooseToAdd(tempProductDTOList);
             }
             case "2" -> {
                 tempProductDTOList = getSortedList(tempProductDTOList,
                         Comparator.comparing(ProductDTO::getPrice)
                 );
-                choose(tempProductDTOList);
+                chooseToAdd(tempProductDTOList);
             }
             case "0" -> cancel();
             default -> wrongCommand();
         }
     }
 
-    private void choose(List<ProductDTO> tempProductDTOList) {
+    private void chooseToAdd(List<ProductDTO> tempProductDTOList) {
         Scanner scanner = new Scanner(System.in);
         System.out.printf(DESCRIPTION_SUBMENU_TEXT + System.lineSeparator(),
                 DTOMapper.toNumeratedProductDTOLines(tempProductDTOList));
@@ -235,6 +266,37 @@ public class Menu {
                 .toList();
     }
 
+    private void editBasketMenu() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(BASKET_EDIT_SUBMENU_TEXT);
+        switch (scanner.next()) {
+            case "1" -> {
+                System.out.printf(BASKET_CHOOSE_SUBMENU_TEXT, basketTOLines());
+                System.out.println(ENTER_BASKET_PRODUCT_NUMBER_SUBMENU_TEXT);
+                String command = scanner.next();
+                if (CommandValidator.validate(command)) {
+                    if (Integer.parseInt(command) <= productBasket.getProductsInBasket().size()) {
+                        productBasket.getProductsInBasket().remove(Integer.parseInt(command) - 1);
+                        System.out.println("Товар удален из корзины.");
+                    } else {
+                        wrongCommand();
+                    }
+                } else {
+                    wrongCommand();
+                }
+            }
+            case "2" -> {
+                System.out.printf(BASKET_CHOOSE_SUBMENU_TEXT, basketTOLines());
+            }
+            case "0" -> cancel();
+            default -> wrongCommand();
+        }
+
+    }
+
+    private void editCountBasketMenu() {
+
+    }
 
     private final static String MAIN_MENU_TEXT = """
             Введите необходимый пункт меню для выполнения:
@@ -271,5 +333,19 @@ public class Menu {
     private final static String ENTER_SEARCH_INFO_SUBMENU_TEXT = """
             Введите строку для поиска:
             0. Отмена.""";
-
+    private final static String BASKET_SUBMENU_TEXT = """
+            1. Редактировать корзину.
+            2. Купить.
+            0. Отмена.""";
+    private final static String BASKET_EDIT_SUBMENU_TEXT = """
+            1. Удалить товар из корзины.
+            2. Изменить количество товара.
+            0. Отмена.""";
+    private final static String BASKET_CHOOSE_SUBMENU_TEXT = """
+            Выберите товар из списка:
+            %s
+            0. Отмена.""";
+    private final static String ENTER_BASKET_PRODUCT_NUMBER_SUBMENU_TEXT = """
+            Введите номер позиции продукта для удаления из корзины:
+            0. Отмена.""";
 }

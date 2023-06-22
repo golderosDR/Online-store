@@ -104,7 +104,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                         )
                 )
                 .map(DTOMapper::toProductDTO)
-                .toList().get(0);
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

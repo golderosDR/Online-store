@@ -1,9 +1,0 @@
-        “Horns and hooves” GMBH
-             Сheck number: 123456
-   Good   |   Amount   |   Price
-Bowflex Adjustable Dumbbells |5| 999.00
-NordicTrack T Series Treadmill |5| - 999.00
-Samsung Galaxy Watch Active2 |5|- 999.00
-Итого: 9999.00
-
-   Thank you for shopping
