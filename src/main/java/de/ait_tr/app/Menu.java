@@ -11,9 +11,7 @@ import de.ait_tr.services.ProductService;
 import de.ait_tr.services.ProductServiceImpl;
 import de.ait_tr.validators.CommandValidator;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
     private final ProductService productService;
@@ -193,6 +191,23 @@ public class Menu {
 
     }
 
+    /**
+     * sout 10 random products
+     */
+    public void printHomePageProductList() {
+        Random random = new Random();
+
+        Set<ProductDTO> homePageProductList = new HashSet<>();
+        while (homePageProductList.size() < 10) {
+            int index = random.nextInt(productService.findAll().size());
+            ProductDTO productDTO = productService.findAll().get(index);
+            homePageProductList.add(productDTO);  //здесь  Set<ProductDTO>
+        }
+        for (ProductDTO productDTO : homePageProductList) {
+            System.out.println(DTOMapper.toLine(productDTO));
+        }
+
+    }
 
     private void showFiltered(List<ProductDTO> tempProductDTOList) {
         System.out.println(SORTING_SUBMENU_TEXT);
