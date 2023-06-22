@@ -1,8 +1,10 @@
 package de.ait_tr.services;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.ProductInBasketDTO;
+import de.ait_tr.models.Category;
+import de.ait_tr.models.ProductBasket;
 import de.ait_tr.repositories.ProductRepository;
+import de.ait_tr.validators.BasketValidator;
 
 import java.util.List;
 
@@ -17,57 +19,10 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> findAll() {
         return productRepository.findAll();
     }
-
     @Override
-    public List<ProductDTO> findAllSmartphones() {
-        return productRepository.findAllSmartphones();
+    public List<ProductDTO> findByCategory(Category category) {
+        return productRepository.findByCategory(category);
     }
-
-    @Override
-    public List<ProductDTO> findAllWatches() {
-        return productRepository.findAllWatches();
-    }
-
-    @Override
-    public List<ProductDTO> findAllHeath() {
-        return productRepository.findAllHeath();
-    }
-
-    @Override
-    public List<ProductDTO> findAllAccessories() {
-        return productRepository.findAllAccessories();
-    }
-
-    @Override
-    public List<ProductDTO> findAllNotebooks() {
-        return productRepository.findAllNotebooks();
-    }
-
-    @Override
-    public List<ProductDTO> findAllTablets() {
-        return productRepository.findAllTablets();
-    }
-
-    @Override
-    public List<ProductDTO> findAllTVs() {
-        return productRepository.findAllTVs();
-    }
-
-    @Override
-    public List<ProductDTO> findAllBags() {
-        return productRepository.findAllBags();
-    }
-
-    @Override
-    public List<ProductDTO> findAllGlasses() {
-        return productRepository.findAllGlasses();
-    }
-
-    @Override
-    public List<ProductDTO> findAllBelts() {
-        return productRepository.findAllBelts();
-    }
-
     @Override
     public List<ProductDTO> find(String searchInfo) {
         return productRepository.find(searchInfo);
@@ -79,7 +34,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean buy(List<ProductInBasketDTO> productInBasketDTOList) {
-        return productRepository.buy(productInBasketDTOList);
+    public boolean buy(ProductBasket productBasket) {
+        if (BasketValidator.validate(productBasket, productRepository.findAll())) {
+            productRepository.buy(productBasket.getProductsInBasket());
+            return true;
+        }
+        return false;
     }
 }

@@ -1,9 +1,9 @@
 package de.ait_tr.repositories;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.ProductInBasketDTO;
-import de.ait_tr.mapper.DTOMapper;
-import de.ait_tr.mapper.ProductMapper;
+import de.ait_tr.dtos.InBasketDTO;
+import de.ait_tr.mappers.DTOMapper;
+import de.ait_tr.mappers.ProductMapper;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
 
@@ -43,77 +43,26 @@ public class ProductRepositoryImpl implements ProductRepository {
         }
     }
 
-    private List<ProductDTO> filterByCategory(Category category) {
+    @Override
+    public List<ProductDTO> findByCategory(Category category) {
         return getAll()
                 .stream()
                 .filter(product -> product.getCategory().equals(category))
                 .map(DTOMapper::toProductDTO)
                 .toList();
     }
-
-    @Override
-    public List<ProductDTO> findAllSmartphones() {
-        return filterByCategory(Category.SMARTPHONES);
-    }
-
-    @Override
-    public List<ProductDTO> findAllWatches() {
-        return filterByCategory(Category.WATCHES);
-    }
-
-    @Override
-    public List<ProductDTO> findAllAccessories() {
-        return filterByCategory(Category.ACCESSORIES);
-    }
-
-    @Override
-    public List<ProductDTO> findAllNotebooks() {
-        return filterByCategory(Category.NOTEBOOKS);
-    }
-
-    @Override
-    public List<ProductDTO> findAllTablets() {
-        return filterByCategory(Category.TABLETS);
-    }
-
-    @Override
-    public List<ProductDTO> findAllTVs() {
-        return filterByCategory(Category.TVS);
-    }
-
-    @Override
-    public List<ProductDTO> findAllBags() {
-        return filterByCategory(Category.BAGS);
-    }
-
-    @Override
-    public List<ProductDTO> findAllGlasses() {
-        return filterByCategory(Category.GLASSES);
-    }
-
-    @Override
-    public List<ProductDTO> findAllBelts() {
-        return filterByCategory(Category.BELTS);
-    }
-
-    @Override
-    public List<ProductDTO> findAllHeath() {
-        return filterByCategory(Category.HEALTH);
-    }
-
     /**
      * change amount in products for each product from basket
-     * @param productInBasketDTOList
+     *
+     * @param inBasketDTOList
      */
     @Override
-    public void buy(List<ProductInBasketDTO> productInBasketDTOList) {
+    public void buy(List<InBasketDTO> inBasketDTOList) {
         List<Product> chanchedProductList = getAll();
-        for (ProductInBasketDTO productInBasketDTO : productInBasketDTOList
-        ) {
-            for (Product product : chanchedProductList
-            ) {
-                if (product.getId().equals(productInBasketDTO.id())) {  //совпадение id
-                    product.setAmount(product.getAmount() - productInBasketDTO.count()); //установили количество
+        for (InBasketDTO inBasketDTO : inBasketDTOList) {
+            for (Product product : chanchedProductList) {
+                if (product.getId().equals(inBasketDTO.getId())) {  //совпадение id
+                    product.setAmount(product.getAmount() - inBasketDTO.getCount()); //установили количество
                 }
             }
         }
@@ -144,7 +93,7 @@ public class ProductRepositoryImpl implements ProductRepository {
      * find ProductDTO  by id
      *
      * @param id
-     * @return List<ProductDTO>
+     * @return ProductDTO
      */
     @Override
     public ProductDTO findById(String id) {

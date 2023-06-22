@@ -1,9 +1,10 @@
-package de.ait_tr.mapper;
+package de.ait_tr.mappers;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.ProductInBasketDTO;
+import de.ait_tr.dtos.InBasketDTO;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
+import de.ait_tr.validators.ProductValidator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class DTOMapper {
     public static String ILLEGAL_FORMAT_OR_DAMAGED_FILE = "Файл содержит элементы неподдерживаемого формата или поврежден.";
     private static final String DELIMITER = ";";
+    private static final int POINT_NAME_MAX_LENGTH = 50;
     private DTOMapper(){
     }
     public static  Product toProduct(String line) {
@@ -32,9 +34,9 @@ public class DTOMapper {
 
             Product product = new Product(id, title, category, basicPrice, markup, amount, description);
 
-/*            if (ProductValidator.validate(product)) {*/
+            if (ProductValidator.validate(product)) {
                 return product;
-/*            } else return null;*/
+            } else return null;
 
         } catch (RuntimeException e) {
             throw new RuntimeException(ILLEGAL_FORMAT_OR_DAMAGED_FILE) ;
@@ -53,18 +55,15 @@ public class DTOMapper {
         );
     }
     public static String toLine(ProductDTO productDTO) {
-        StringBuilder output = new StringBuilder();
-        output.append(productDTO.getTitle())
-                .append(", category ")
-                .append(productDTO.getCategory())
-                .append(", price ")
-                .append(String.format("%.2f",productDTO.getPrice()))
-                .append(".")
-        ;
-        return  output.toString();
+        return productDTO.getTitle() +
+                ", category " +
+                productDTO.getCategory() +
+                ", price " +
+                String.format("%.2f", productDTO.getPrice()) +
+                ".";
     }
     public static String toLineWithDescription(ProductDTO productDTO) {
-        String output = productDTO.getTitle() + "," +
+        return productDTO.getTitle() + "," +
                 System.lineSeparator() +
                 "category " +
                 productDTO.getCategory() +
@@ -75,7 +74,6 @@ public class DTOMapper {
                 "," +
                 System.lineSeparator() +
                 productDTO.getDescription();
-        return output;
     }
     public static String toNumeratedProductDTOLines(List<ProductDTO> productDTOList) {
         int counter = 1;
@@ -88,7 +86,17 @@ public class DTOMapper {
         }
         return output.toString();
     }
-    public static ProductInBasketDTO toProductInBasketDTO(ProductDTO productDTO, int count) {
-        return  new ProductInBasketDTO(productDTO, count);
+    public static InBasketDTO toProductInBasketDTO(ProductDTO productDTO, int count) {
+        return  new InBasketDTO(productDTO.getId(), count);
+    }
+    public static String toLine(String title,double price, int count) {
+        StringBuilder output = new StringBuilder();
+        int spacesCount = POINT_NAME_MAX_LENGTH - title.length() - String.format("%.2f",price).length()- String.valueOf(count).length()-1;
+        output.append(title)
+                .append(" ".repeat(spacesCount))
+                .append(count)
+                .append(" X ")
+                .append(String.format("%.2f",price));
+        return output.toString();
     }
 }

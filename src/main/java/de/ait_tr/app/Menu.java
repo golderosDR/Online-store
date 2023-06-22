@@ -1,8 +1,10 @@
 package de.ait_tr.app;
 
+import de.ait_tr.dtos.InBasketDTO;
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.mapper.CategoryMapper;
-import de.ait_tr.mapper.DTOMapper;
+import de.ait_tr.mappers.CategoryMapper;
+import de.ait_tr.mappers.DTOMapper;
+import de.ait_tr.models.Category;
 import de.ait_tr.models.ProductBasket;
 import de.ait_tr.repositories.ProductRepositoryImpl;
 import de.ait_tr.services.ProductService;
@@ -66,43 +68,43 @@ public class Menu {
         List<ProductDTO> tempProductDTOList;
         switch (scanner.next()) {
             case "1" -> {
-                tempProductDTOList = productService.findAllAccessories();
+                tempProductDTOList = productService.findByCategory(Category.ACCESSORIES);
                 showFiltered(tempProductDTOList);
             }
             case "2" -> {
-                tempProductDTOList = productService.findAllBags();
+                tempProductDTOList = productService.findByCategory(Category.BAGS);
                 showFiltered(tempProductDTOList);
             }
             case "3" -> {
-                tempProductDTOList = productService.findAllBelts();
+                tempProductDTOList = productService.findByCategory(Category.BELTS);
                 showFiltered(tempProductDTOList);
             }
             case "4" -> {
-                tempProductDTOList = productService.findAllGlasses();
+                tempProductDTOList = productService.findByCategory(Category.GLASSES);
                 showFiltered(tempProductDTOList);
             }
             case "5" -> {
-                tempProductDTOList = productService.findAllHeath();
+                tempProductDTOList = productService.findByCategory(Category.HEALTH);
                 showFiltered(tempProductDTOList);
             }
             case "6" -> {
-                tempProductDTOList = productService.findAllNotebooks();
+                tempProductDTOList = productService.findByCategory(Category.NOTEBOOKS);
                 showFiltered(tempProductDTOList);
             }
             case "7" -> {
-                tempProductDTOList = productService.findAllSmartphones();
+                tempProductDTOList = productService.findByCategory(Category.SMARTPHONES);
                 showFiltered(tempProductDTOList);
             }
             case "8" -> {
-                tempProductDTOList = productService.findAllTablets();
+                tempProductDTOList = productService.findByCategory(Category.TABLETS);
                 showFiltered(tempProductDTOList);
             }
             case "9" -> {
-                tempProductDTOList = productService.findAllTVs();
+                tempProductDTOList = productService.findByCategory(Category.TVS);
                 showFiltered(tempProductDTOList);
             }
             case "10" -> {
-                tempProductDTOList = productService.findAllWatches();
+                tempProductDTOList = productService.findByCategory(Category.WATCHES);
                 showFiltered(tempProductDTOList);
             }
             case "0" -> cancel();
@@ -130,6 +132,36 @@ public class Menu {
         }
 
     }
+
+    public void basketMenu() {
+        if (productBasket.getProductsInBasket().size() == 0) {
+            System.out.println("Корзина пуста.");
+        } else {
+            System.out.println(basketTOLines());
+        }
+    }
+
+    private String basketTOLines() {
+        System.out.println("Содержимое корзины:");
+        List<InBasketDTO> productsInBasket = productBasket.getProductsInBasket();
+        StringBuilder output = new StringBuilder();
+        int counter = 1;
+        double totalPrice = 0;
+        for (InBasketDTO inBasketDTO : productsInBasket) {
+            ProductDTO temp = productService.findById(inBasketDTO.getId());
+            totalPrice += temp.getPrice() * inBasketDTO.getCount();
+            output.append(counter++)
+                    .append(". ")
+                    .append(DTOMapper.toLine(temp.getTitle(), temp.getPrice(), inBasketDTO.getCount()))
+                    .append(System.lineSeparator());
+        }
+        output.append(System.lineSeparator())
+                .append("Total price")
+                .append(" ".repeat(44 - String.valueOf(totalPrice).length()))
+                .append(String.format("%.2f", totalPrice));
+        return output.toString();
+    }
+
 
     private void showFiltered(List<ProductDTO> tempProductDTOList) {
         System.out.println(SORTING_SUBMENU_TEXT);
@@ -160,7 +192,7 @@ public class Menu {
         if (CommandValidator.validate(command)) {
             if (Integer.parseInt(command) == 0) {
                 cancel();
-            } else if (Integer.parseInt(command) < tempProductDTOList.size()) {
+            } else if (Integer.parseInt(command) <= tempProductDTOList.size()) {
                 ProductDTO tempProductDTO = tempProductDTOList.get(Integer.parseInt(command) - 1);
                 System.out.println(DTOMapper.toLineWithDescription(tempProductDTO));
                 addToBasket(tempProductDTO);
@@ -180,9 +212,15 @@ public class Menu {
             case "1" -> {
                 System.out.println(ENTER_NUMBER_OF_PRODUCT_SUBMENU_TEXT);
                 command = scanner.next();
-                if (CommandValidator.validate(command) && Integer.parseInt(command) > 0) {
-                    productBasket.add(tempProductDTO, Integer.parseInt(command));
-                    System.out.println("Товар добавлен в корзину.");
+                if (CommandValidator.validate(command)) {
+                    if (Integer.parseInt(command) > 0) {
+                        productBasket.add(tempProductDTO, Integer.parseInt(command));
+                        System.out.println("Товар добавлен в корзину.");
+                    } else {
+                        wrongCommand();
+                    }
+                } else {
+                    wrongCommand();
                 }
             }
             case "0" -> cancel();

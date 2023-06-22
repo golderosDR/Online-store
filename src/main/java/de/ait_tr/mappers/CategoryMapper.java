@@ -1,4 +1,4 @@
-package de.ait_tr.mapper;
+package de.ait_tr.mappers;
 
 import de.ait_tr.models.Category;
 

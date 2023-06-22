@@ -1,7 +1,4 @@
 package de.ait_tr.dtos;
-
-import de.ait_tr.models.Category;
-
 import java.util.Objects;
 
 public class ProductDTO {

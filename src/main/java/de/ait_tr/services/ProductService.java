@@ -1,28 +1,16 @@
 package de.ait_tr.services;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.ProductInBasketDTO;
+import de.ait_tr.models.Category;
+import de.ait_tr.models.ProductBasket;
 
 import java.util.List;
 
 public interface ProductService {
     List<ProductDTO> findAll();
-    List<ProductDTO> findAllSmartphones();
 
-    List<ProductDTO> findAllWatches();
-
-    List<ProductDTO> findAllHeath();
-
-    List<ProductDTO> findAllAccessories();
-    List<ProductDTO> findAllNotebooks();
-    List<ProductDTO> findAllTablets();
-    List<ProductDTO> findAllTVs();
-    List<ProductDTO> findAllBags();
-    List<ProductDTO> findAllGlasses();
-    List<ProductDTO> findAllBelts();
-
+    List<ProductDTO> findByCategory(Category category);
     List<ProductDTO> find(String searchInfo);
     ProductDTO findById(String id);
-
-    boolean buy(List<ProductInBasketDTO> productInBasketDTOList);
+    boolean buy(ProductBasket productBasket);
 }

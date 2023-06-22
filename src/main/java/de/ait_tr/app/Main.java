@@ -12,7 +12,7 @@ public class Main {
                 case "1" -> menu.allProductsMenu();
                 case "2" -> menu.filteredByCategoryMenu();
                 case "3" -> menu.findMenu();
-                /*case "4" -> ;*/
+                case "4" -> menu.basketMenu();
                 case "0" -> {
                     System.out.println("Выход...");
                     scanner.close();
