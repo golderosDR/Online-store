@@ -6,12 +6,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Menu menu = new Menu();
-        menu.printHomePageProductList();
+        menu.greeting();
         while (true) {
             menu.showMainMenu();
             switch (scanner.next()) {
                 case "1" -> menu.allProductsMenu();
-                case "2" -> menu.filteredByCategoryMenu();
+                case "2" -> menu.filterByCategoryMenu();
                 case "3" -> menu.findMenu();
                 case "4" -> menu.basketMenu();
                 case "0" -> {

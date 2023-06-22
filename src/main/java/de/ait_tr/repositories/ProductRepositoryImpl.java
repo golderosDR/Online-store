@@ -55,18 +55,19 @@ public class ProductRepositoryImpl implements ProductRepository {
      * change amount in products for each product from basket
      *
      * @param inBasketDTOList
+     * @return
      */
     @Override
-    public void buy(List<InBasketDTO> inBasketDTOList) {
-        List<Product> chanchedProductList = getAll();
+    public List<Product> getUpdatedList(List<InBasketDTO> inBasketDTOList) {
+        List<Product> updatedProductList = getAll();
         for (InBasketDTO inBasketDTO : inBasketDTOList) {
-            for (Product product : chanchedProductList) {
-                if (product.getId().equals(inBasketDTO.getId())) {  //совпадение id
+            for (Product product : updatedProductList) {
+                if (product.getId().equals(inBasketDTO.getProductDTO().getId())) {  //совпадение id
                     product.setAmount(product.getAmount() - inBasketDTO.getCount()); //установили количество
                 }
             }
         }
-        save(chanchedProductList);
+        return updatedProductList;
     }
 
 
@@ -109,7 +110,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void save(List<Product> productList) {
+    public void update(List<Product> productList) {
         String lines = productList
                 .stream()
                 .map(ProductMapper::toLine)

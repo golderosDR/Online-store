@@ -13,7 +13,7 @@ public class BasketValidator {
         List<InBasketDTO> inBasketDTOList = productBasket.getProductsInBasket();
         for (InBasketDTO inBasketDTO : inBasketDTOList) {
             for (ProductDTO productDTO : productDTOList) {
-                if (inBasketDTO.getId().equals(productDTO.getId())) {
+                if (inBasketDTO.getProductDTO().getId().equals(productDTO.getId())) {
                     if (inBasketDTO.getCount() > productDTO.getAmount()) {
                         return false;
                     }

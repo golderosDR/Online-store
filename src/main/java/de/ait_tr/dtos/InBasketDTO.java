@@ -1,18 +1,17 @@
 package de.ait_tr.dtos;
 
 public class InBasketDTO {
-    private final String id;
+    private final ProductDTO productDTO;
     private int count;
 
-    public InBasketDTO(String id, int count) {
-        this.id = id;
+    public InBasketDTO(ProductDTO productDTO, int count) {
+        this.productDTO = productDTO;
         this.count = count;
     }
 
-    public String getId() {
-        return id;
+    public ProductDTO getProductDTO() {
+        return productDTO;
     }
-
     public int getCount() {
         return count;
     }
@@ -20,10 +19,11 @@ public class InBasketDTO {
     public void setCount(int count) {
         this.count = count;
     }
+
     @Override
     public String toString() {
-        return "ProductInBasketDTO{" +
-                "id='" + id + '\'' +
+        return "InBasketDTO{" +
+                "productDTO=" + productDTO +
                 ", count=" + count +
                 '}';
     }

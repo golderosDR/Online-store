@@ -58,7 +58,7 @@ public class DTOMapper {
         );
     }
 
-    public static String toLine(ProductDTO productDTO) {
+    public static String toLineInBasket(ProductDTO productDTO) {
         return productDTO.getTitle() +
                 ", category " +
                 productDTO.getCategory() +
@@ -87,24 +87,30 @@ public class DTOMapper {
         for (ProductDTO productDTO : productDTOList) {
             output.append(counter++)
                     .append(". ")
-                    .append(toLine(productDTO))
+                    .append(toLineInBasket(productDTO))
                     .append(System.lineSeparator());
         }
         return output.toString();
     }
 
     public static InBasketDTO toProductInBasketDTO(ProductDTO productDTO, int count) {
-        return new InBasketDTO(productDTO.getId(), count);
+        return new InBasketDTO(productDTO, count);
     }
 
-    public static String toLine(String title, double price, int count) {
+    public static String toLineInBasket(InBasketDTO inBasketDTO) {
         StringBuilder output = new StringBuilder();
-        int spacesCount = POINT_NAME_MAX_LENGTH - title.length() - String.format("%.2f", price).length() - String.valueOf(count).length() - 3;
+        String title = inBasketDTO.getProductDTO().getTitle();
+        String price = String.format("%.2f", inBasketDTO.getProductDTO().getPrice());
+        String count = String.valueOf(inBasketDTO.getCount());
+        int spacesCount = POINT_NAME_MAX_LENGTH
+                - title.length()
+                - price.length()
+                - count.length() - 3;
         output.append(title)
                 .append(" ".repeat(spacesCount))
                 .append(count)
                 .append(" X ")
-                .append(String.format("%.2f", price));
+                .append(price);
         return output.toString();
     }
 }

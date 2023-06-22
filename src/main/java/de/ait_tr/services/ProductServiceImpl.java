@@ -19,10 +19,12 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> findAll() {
         return productRepository.findAll();
     }
+
     @Override
     public List<ProductDTO> findByCategory(Category category) {
         return productRepository.findByCategory(category);
     }
+
     @Override
     public List<ProductDTO> find(String searchInfo) {
         return productRepository.find(searchInfo);
@@ -36,7 +38,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean buy(ProductBasket productBasket) {
         if (BasketValidator.validate(productBasket, productRepository.findAll())) {
-            productRepository.buy(productBasket.getProductsInBasket());
+            productRepository.update(
+                    productRepository.getUpdatedList(
+                            productBasket.getProductsInBasket()
+                    )
+            );
             return true;
         }
         return false;

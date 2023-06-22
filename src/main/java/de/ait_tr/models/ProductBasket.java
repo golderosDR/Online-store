@@ -19,11 +19,17 @@ public class ProductBasket {
     }
     public void add(ProductDTO productDTO, int count) {
         for (InBasketDTO inBasketDTO: productsInBasket) {
-            if (inBasketDTO.getId().equals(productDTO.getId())) {
+            if (inBasketDTO.getProductDTO().getId().equals(productDTO.getId())) {
                inBasketDTO.setCount(inBasketDTO.getCount() + count);
                return;
             }
         }
         productsInBasket.add(DTOMapper.toProductInBasketDTO(productDTO, count));
+    }
+    public void remove(int index) {
+        productsInBasket.remove(index);
+    }
+    public void edit(int index, int newCount) {
+        productsInBasket.get(index).setCount(newCount);
     }
 }

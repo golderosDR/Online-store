@@ -12,8 +12,8 @@ public interface ProductRepository {
     List<ProductDTO> find(String searchInfo);
     List<ProductDTO> findByCategory(Category category);
     ProductDTO findById(String id);
-    void buy(List<InBasketDTO> inBasketDTOList);
-    void save(List<Product> productList);
+    List<Product> getUpdatedList(List<InBasketDTO> inBasketDTOList);
+    void update(List<Product> productList);
 
 
 
