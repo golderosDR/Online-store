@@ -12,6 +12,7 @@ import de.ait_tr.services.ProductServiceImpl;
 import de.ait_tr.validators.CommandValidator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Menu {
     private final ProductService productService;
@@ -195,44 +196,20 @@ public class Menu {
      * sout 10 random products
      */
     public void printHomePageProductList() {
-/*  VARIANT 1
-        Random random = new Random();
-        Set<ProductDTO> homePageProductList = new HashSet<>();
-        //Set<Intege> index
-        //лист - findAll
-        // перерменная куда положить 10 дтоошек
-        потоек
-
-        while (homePageProductList.size() < 10) {
-            int index = random.nextInt(productService.findAll().size());
-            ProductDTO productDTO = productService.findAll().get(index);
-            homePageProductList.add(productDTO);  //здесь  Set<ProductDTO>
-        }
-        for (ProductDTO productDTO : homePageProductList) {
-            System.out.println(DTOMapper.toLine(productDTO));
-        }*/
-
-     /* VARIANT 2
-
         Random random = new Random();
         Set<Integer> indexList = new HashSet<>();
         List<ProductDTO> productDTOList = productService.findAll();
-        List<ProductDTO> homePageProductList = new ArrayList<>();
-        while (indexList.size() < 10) {
-            int index = random.nextInt(productDTOList.size());
-            ProductDTO productDTO = productService.findAll().get(index);
-            indexList.add(index);
-        }
-        for (Integer index : indexList) {
-            System.out.println(DTOMapper.toLine(productDTOList.get(index)));
-        }*/
+        List<ProductDTO> randomProductList = new ArrayList<>();
 
-        //VARIANT 3
-        List<ProductDTO> productDTOList = productService.findAll();
-        productDTOList.stream()
-                .filter(b -> new Random().nextBoolean())
-                .limit(10)
-                .forEach(System.out::println);
+        while (indexList.size() < 10) {
+            indexList.add(random.nextInt(productDTOList.size()));
+        }
+        indexList.forEach(index -> randomProductList.add(productDTOList.get(index)));
+        System.out.println(
+                randomProductList.stream()
+                        .map(DTOMapper::toLine)
+                        .collect(Collectors.joining(System.lineSeparator()))
+        );
 
     }
 
