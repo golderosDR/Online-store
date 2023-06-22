@@ -168,23 +168,23 @@ public class Menu {
         List<InBasketDTO> productsInBasket = productBasket.getProductsInBasket();
         StringBuilder output = new StringBuilder();
         int counter = 1;
-                if (!productBasket.getProductsInBasket().isEmpty()) {
-        ProductDTO temp = productService.findById(productBasket.getProductsInBasket().get(0).getId());
-        double totalPrice = 0;
-        int spaceCount = DTOMapper.toLine(temp.getTitle(), temp.getPrice(), productBasket.getProductsInBasket().get(0).getCount()).length() + 3;
-        for (InBasketDTO inBasketDTO : productsInBasket) {
-            temp = productService.findById(inBasketDTO.getId());
-            totalPrice += temp.getPrice() * inBasketDTO.getCount();
-            output.append(counter++)
-                    .append(". ")
-                    .append(DTOMapper.toLine(temp.getTitle(), temp.getPrice(), inBasketDTO.getCount()))
-                    .append(System.lineSeparator());
-        }
-        output.append(System.lineSeparator())
-                .append("Total price")
-                .append(" ".repeat(spaceCount - ("Total price").length() - String.format("%.2f", totalPrice).length()))
-                .append(String.format("%.2f", totalPrice));
-        return output.toString();
+        if (!productBasket.getProductsInBasket().isEmpty()) {
+            ProductDTO temp = productService.findById(productBasket.getProductsInBasket().get(0).getId());
+            double totalPrice = 0;
+            int spaceCount = DTOMapper.toLine(temp.getTitle(), temp.getPrice(), productBasket.getProductsInBasket().get(0).getCount()).length() + 3;
+            for (InBasketDTO inBasketDTO : productsInBasket) {
+                temp = productService.findById(inBasketDTO.getId());
+                totalPrice += temp.getPrice() * inBasketDTO.getCount();
+                output.append(counter++)
+                        .append(". ")
+                        .append(DTOMapper.toLine(temp.getTitle(), temp.getPrice(), inBasketDTO.getCount()))
+                        .append(System.lineSeparator());
+            }
+            output.append(System.lineSeparator())
+                    .append("Total price")
+                    .append(" ".repeat(spaceCount - ("Total price").length() - String.format("%.2f", totalPrice).length()))
+                    .append(String.format("%.2f", totalPrice));
+            return output.toString();
         } else {
             return "Корзина пуста";
         }
@@ -195,9 +195,14 @@ public class Menu {
      * sout 10 random products
      */
     public void printHomePageProductList() {
+/*  VARIANT 1
         Random random = new Random();
-
         Set<ProductDTO> homePageProductList = new HashSet<>();
+        //Set<Intege> index
+        //лист - findAll
+        // перерменная куда положить 10 дтоошек
+        потоек
+
         while (homePageProductList.size() < 10) {
             int index = random.nextInt(productService.findAll().size());
             ProductDTO productDTO = productService.findAll().get(index);
@@ -205,9 +210,32 @@ public class Menu {
         }
         for (ProductDTO productDTO : homePageProductList) {
             System.out.println(DTOMapper.toLine(productDTO));
+        }*/
+
+     /* VARIANT 2
+
+        Random random = new Random();
+        Set<Integer> indexList = new HashSet<>();
+        List<ProductDTO> productDTOList = productService.findAll();
+        List<ProductDTO> homePageProductList = new ArrayList<>();
+        while (indexList.size() < 10) {
+            int index = random.nextInt(productDTOList.size());
+            ProductDTO productDTO = productService.findAll().get(index);
+            indexList.add(index);
         }
+        for (Integer index : indexList) {
+            System.out.println(DTOMapper.toLine(productDTOList.get(index)));
+        }*/
+
+        //VARIANT 3
+        List<ProductDTO> productDTOList = productService.findAll();
+        productDTOList.stream()
+                .filter(b -> new Random().nextBoolean())
+                .limit(10)
+                .forEach(System.out::println);
 
     }
+
 
     private void showFiltered(List<ProductDTO> tempProductDTOList) {
         System.out.println(SORTING_SUBMENU_TEXT);
