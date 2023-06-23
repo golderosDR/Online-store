@@ -1,7 +1,7 @@
 package de.ait_tr.repositories;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.InBasketDTO;
+import de.ait_tr.dtos.BasketRecordDTO;
 import de.ait_tr.mappers.DTOMapper;
 import de.ait_tr.mappers.ProductMapper;
 import de.ait_tr.models.Category;
@@ -36,7 +36,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         try {
             return Files.readAllLines(new File(fileName).toPath())
                     .stream()
-                    .map(DTOMapper::toProduct)
+                    .map(ProductMapper::toProduct)
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
@@ -54,22 +54,35 @@ public class ProductRepositoryImpl implements ProductRepository {
     /**
      * change amount in products for each product from basket
      *
-     * @param inBasketDTOList
+     * @param basketRecordDTOList
      * @return
      */
-    @Override
-    public List<Product> getUpdatedList(List<InBasketDTO> inBasketDTOList) {
+    private List<Product> getUpdatedList(List<BasketRecordDTO> basketRecordDTOList) {
         List<Product> updatedProductList = getAll();
-        for (InBasketDTO inBasketDTO : inBasketDTOList) {
+        for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
             for (Product product : updatedProductList) {
-                if (product.getId().equals(inBasketDTO.getProductDTO().getId())) {  //совпадение id
-                    product.setAmount(product.getAmount() - inBasketDTO.getCount()); //установили количество
+                if (product.getId().equals(basketRecordDTO.getId())) {  //совпадение id
+                    product.setAmount(product.getAmount() - basketRecordDTO.getCount()); //установили количество
                 }
             }
         }
         return updatedProductList;
     }
+    @Override
+    public void update(List<BasketRecordDTO> basketRecordDTOList) {
+        List<Product> productList = getUpdatedList(basketRecordDTOList);
+        String lines = productList
+                .stream()
+                .map(ProductMapper::toLine)
+                .collect(Collectors.joining(System.lineSeparator()));
 
+        try (FileWriter writer = new FileWriter(fileName);
+             BufferedWriter buffWriter = new BufferedWriter(writer)) {
+            buffWriter.write(lines);
+        } catch (IOException e) {
+            throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
+        }
+    }
 
     /**
      * find ProductDTO by String
@@ -107,20 +120,5 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .map(DTOMapper::toProductDTO)
                 .findFirst()
                 .orElse(null);
-    }
-
-    @Override
-    public void update(List<Product> productList) {
-        String lines = productList
-                .stream()
-                .map(ProductMapper::toLine)
-                .collect(Collectors.joining(System.lineSeparator()));
-
-        try (FileWriter writer = new FileWriter(fileName);
-             BufferedWriter buffWriter = new BufferedWriter(writer)) {
-            buffWriter.write(lines);
-        } catch (IOException e) {
-            throw new RuntimeException(FILE_NOT_FOUND_ERROR_MSG);
-        }
     }
 }

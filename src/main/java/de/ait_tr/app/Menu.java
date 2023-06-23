@@ -9,6 +9,7 @@ import de.ait_tr.models.ProductBasket;
 import de.ait_tr.repositories.ProductRepositoryImpl;
 import de.ait_tr.services.ProductService;
 import de.ait_tr.services.ProductServiceImpl;
+import de.ait_tr.validators.BasketValidator;
 import de.ait_tr.validators.CommandValidator;
 
 import java.util.*;
@@ -44,15 +45,18 @@ public class Menu {
         List<ProductDTO> tempProductDTOList;
         switch (scanner.next()) {
             case "1" -> {
-                tempProductDTOList = getSortedList(productService.findAll(), Comparator.comparing(ProductDTO::getTitle));
+                tempProductDTOList = getSortedList(productService.findAll(),
+                        Comparator.comparing(ProductDTO::getTitle));
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "2" -> {
-                tempProductDTOList = getSortedList(productService.findAll(), Comparator.comparing(ProductDTO::getCategory));
+                tempProductDTOList = getSortedList(productService.findAll(),
+                        Comparator.comparing(ProductDTO::getCategory));
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "3" -> {
-                tempProductDTOList = getSortedList(productService.findAll(), Comparator.comparing(ProductDTO::getPrice));
+                tempProductDTOList = getSortedList(productService.findAll(),
+                        Comparator.comparing(ProductDTO::getPrice));
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "0" -> cancel();
@@ -157,7 +161,12 @@ public class Menu {
     }
 
     public void buyMenu() {
-
+        if (BasketValidator.validate(productBasket, productService.findAll())) {
+            productService.buy(productBasket);
+            System.out.println(SHOPPING_SUCCESS_MSG);
+        } else {
+            System.out.println(SHOPPING_FAIL_MSG);
+        }
     }
 
     /**
@@ -169,7 +178,10 @@ public class Menu {
         System.out.printf("     Horns and hooves GMBH%n    Добро прожаловать, %s!%n%n", userName);
         Random random = new Random();
         Set<Integer> indexList = new HashSet<>();
-        List<ProductDTO> productDTOList = productService.findAll();
+        List<ProductDTO> productDTOList = productService.findAll()
+                .stream()
+                .filter(productDTO -> productDTO.getAmount() != 0)
+                .toList();
         List<ProductDTO> randomProductList = new ArrayList<>();
 
         while (indexList.size() < 10) {
@@ -178,7 +190,8 @@ public class Menu {
         indexList.forEach(index -> randomProductList.add(productDTOList.get(index)));
         System.out.println(
                 randomProductList.stream()
-                        .map(DTOMapper::toLineInBasket)
+                        .sorted(Comparator.comparing(ProductDTO::getTitle))
+                        .map(DTOMapper::toLine)
                         .collect(Collectors.joining(System.lineSeparator()))
         );
         System.out.println();
@@ -193,7 +206,7 @@ public class Menu {
             case "1" -> {
                 tempProductDTOList = getSortedList(tempProductDTOList,
                         Comparator.comparing(ProductDTO::getTitle)
-                );
+                        );
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "2" -> {
@@ -217,8 +230,12 @@ public class Menu {
                 cancel();
             } else if (Integer.parseInt(command) <= tempProductDTOList.size()) {
                 ProductDTO tempProductDTO = tempProductDTOList.get(Integer.parseInt(command) - 1);
-                System.out.println(DTOMapper.toLineWithDescription(tempProductDTO));
-                addToBasketSubmenu(tempProductDTO);
+                if (tempProductDTO.getAmount() != 0) {
+                    System.out.println(DTOMapper.toLineWithDescription(tempProductDTO));
+                    addToBasketSubmenu(tempProductDTO);
+                } else {
+                    System.out.println(PRODUCT_NOT_AVAILABLE_MSG);
+                }
             } else {
                 wrongCommand();
             }

@@ -9,6 +9,9 @@ public class MenuText {
     public final static String PRODUCT_ADDED_MSG = "Товар добавлен в корзину.";
     public final static String PRODUCT_REMOVED_MSG = "Товар удален из корзины.";
     public final static String PRODUCT_COUNT_EDITED_MSG = "Количество товара изменено.";
+    public final static String SHOPPING_SUCCESS_MSG = "Товары успешно куплены.";
+    public final static String SHOPPING_FAIL_MSG = "Недостаточно товара в наличии.";
+    public final static String PRODUCT_NOT_AVAILABLE_MSG = "Товара нет в наличии.";
     public final static String EMPTY_BASKET_MENU_TEXT = """
             Корзина пуста.
             0. Отмена.""";

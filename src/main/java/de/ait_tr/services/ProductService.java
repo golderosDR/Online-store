@@ -12,5 +12,5 @@ public interface ProductService {
     List<ProductDTO> findByCategory(Category category);
     List<ProductDTO> find(String searchInfo);
     ProductDTO findById(String id);
-    boolean buy(ProductBasket productBasket);
+    void buy(ProductBasket productBasket);
 }

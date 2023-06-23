@@ -1,7 +1,7 @@
 package de.ait_tr.validators;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.InBasketDTO;
+import de.ait_tr.dtos.BasketRecordDTO;
 import de.ait_tr.models.ProductBasket;
 
 import java.util.List;
@@ -10,11 +10,13 @@ import java.util.List;
 public class BasketValidator {
     private BasketValidator() {}
     public static boolean validate(ProductBasket productBasket, List<ProductDTO> productDTOList) {
-        List<InBasketDTO> inBasketDTOList = productBasket.getProductsInBasket();
-        for (InBasketDTO inBasketDTO : inBasketDTOList) {
+        List<BasketRecordDTO> basketRecordDTOList = productBasket.getProductsInBasket();
+
+        for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
+
             for (ProductDTO productDTO : productDTOList) {
-                if (inBasketDTO.getProductDTO().getId().equals(productDTO.getId())) {
-                    if (inBasketDTO.getCount() > productDTO.getAmount()) {
+                if (basketRecordDTO.getId().equals(productDTO.getId())) {
+                    if (basketRecordDTO.getCount() > productDTO.getAmount()) {
                         return false;
                     }
                 }

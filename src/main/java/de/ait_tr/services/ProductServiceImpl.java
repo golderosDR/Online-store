@@ -4,7 +4,6 @@ import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.ProductBasket;
 import de.ait_tr.repositories.ProductRepository;
-import de.ait_tr.validators.BasketValidator;
 
 import java.util.List;
 
@@ -36,15 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean buy(ProductBasket productBasket) {
-        if (BasketValidator.validate(productBasket, productRepository.findAll())) {
-            productRepository.update(
-                    productRepository.getUpdatedList(
-                            productBasket.getProductsInBasket()
-                    )
-            );
-            return true;
-        }
-        return false;
+    public void buy(ProductBasket productBasket) {
+            productRepository.update(productBasket.getProductsInBasket());
     }
 }

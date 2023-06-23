@@ -1,7 +1,7 @@
 package de.ait_tr.models;
 
 import de.ait_tr.dtos.ProductDTO;
-import de.ait_tr.dtos.InBasketDTO;
+import de.ait_tr.dtos.BasketRecordDTO;
 import de.ait_tr.mappers.DTOMapper;
 
 import java.util.ArrayList;
@@ -9,18 +9,18 @@ import java.util.List;
 
 public class ProductBasket {
 
-    private final List<InBasketDTO> productsInBasket;
+    private final List<BasketRecordDTO> productsInBasket;
     public ProductBasket() {
         this.productsInBasket = new ArrayList<>();
     }
 
-    public List<InBasketDTO> getProductsInBasket() {
+    public List<BasketRecordDTO> getProductsInBasket() {
         return productsInBasket;
     }
     public void add(ProductDTO productDTO, int count) {
-        for (InBasketDTO inBasketDTO: productsInBasket) {
-            if (inBasketDTO.getProductDTO().getId().equals(productDTO.getId())) {
-               inBasketDTO.setCount(inBasketDTO.getCount() + count);
+        for (BasketRecordDTO basketRecordDTO : productsInBasket) {
+            if (basketRecordDTO.getId().equals(productDTO.getId())) {
+               basketRecordDTO.setCount(basketRecordDTO.getCount() + count);
                return;
             }
         }

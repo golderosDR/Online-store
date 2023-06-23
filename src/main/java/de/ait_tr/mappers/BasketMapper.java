@@ -1,6 +1,6 @@
 package de.ait_tr.mappers;
 
-import de.ait_tr.dtos.InBasketDTO;
+import de.ait_tr.dtos.BasketRecordDTO;
 
 import java.util.List;
 
@@ -9,20 +9,20 @@ public class BasketMapper {
     private BasketMapper() {
     }
 
-    public static String toLines(List<InBasketDTO> inBasketDTOList) {
+    public static String toLines(List<BasketRecordDTO> basketRecordDTOList) {
         StringBuilder output = new StringBuilder();
         int counter = 1;
-        if (inBasketDTOList.isEmpty()) {
+        if (basketRecordDTOList.isEmpty()) {
             return "Корзина пуста";
         } else {
             double totalPrice = 0;
-            int spaceCount = DTOMapper.toLineInBasket(inBasketDTOList.get(0)).length() + placeForX;
+            int spaceCount = DTOMapper.toLine(basketRecordDTOList.get(0)).length() + placeForX;
 
-            for (InBasketDTO inBasketDTO: inBasketDTOList) {
-                totalPrice += inBasketDTO.getProductDTO().getPrice() * inBasketDTO.getCount();
+            for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
+                totalPrice += basketRecordDTO.getPrice() * basketRecordDTO.getCount();
                 output.append(counter++)
                         .append(". ")
-                        .append(DTOMapper.toLineInBasket(inBasketDTO))
+                        .append(DTOMapper.toLine(basketRecordDTO))
                         .append(System.lineSeparator());
             }
             output.append(System.lineSeparator())
