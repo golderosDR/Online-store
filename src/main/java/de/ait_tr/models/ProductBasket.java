@@ -13,6 +13,9 @@ public class ProductBasket {
     public ProductBasket() {
         this.productsInBasket = new ArrayList<>();
     }
+    public ProductBasket( List<BasketRecordDTO> productsInBasket) {
+        this.productsInBasket = productsInBasket;
+    }
 
     public List<BasketRecordDTO> getProductsInBasket() {
         return productsInBasket;

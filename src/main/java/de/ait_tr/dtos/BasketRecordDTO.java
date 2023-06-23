@@ -12,13 +12,13 @@ public class BasketRecordDTO {
         return productInBasketDTO;
     }
     public String getId() {
-        return productInBasketDTO.id();
+        return productInBasketDTO.productId();
     }
     public String getTitle() {
-        return productInBasketDTO.title();
+        return productInBasketDTO.productTitle();
     }
     public double getPrice() {
-        return productInBasketDTO.price();
+        return productInBasketDTO.productPrice();
     }
     public int getCount() {
         return count;

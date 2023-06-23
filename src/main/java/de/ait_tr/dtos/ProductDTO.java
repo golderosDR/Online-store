@@ -61,7 +61,7 @@ public class ProductDTO {
 
     @Override
     public String toString() {
-        return String.format("%s, %s,price %.2f",
+        return String.format("%s, %s,productPrice %.2f",
                 title,
                 category,
                 price

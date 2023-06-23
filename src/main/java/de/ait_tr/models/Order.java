@@ -19,6 +19,14 @@ public class Order {
         this.userId = "Guest";
     }
 
+    public Order(String dateTime, String orderId, int orderNumber, String userId, ProductBasket productBasket) {
+        this.dateTime = dateTime;
+        this.orderId = orderId;
+        this.orderNumber = orderNumber;
+        this.userId = userId;
+        this.productBasket = productBasket;
+    }
+
     public String getUserId() {
         return userId;
     }

@@ -61,7 +61,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         List<Product> updatedProductList = getAll();
         for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
             for (Product product : updatedProductList) {
-                if (product.getId().equals(basketRecordDTO.getId())) {  //совпадение id
+                if (product.getId().equals(basketRecordDTO.getId())) {  //совпадение productId
                     product.setAmount(product.getAmount() - basketRecordDTO.getCount()); //установили количество
                 }
             }
@@ -104,7 +104,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     /**
-     * find ProductDTO  by id
+     * find ProductDTO  by productId
      *
      * @param id
      * @return ProductDTO

@@ -26,8 +26,8 @@ public class BasketMapper {
                         .append(System.lineSeparator());
             }
             output.append(System.lineSeparator())
-                    .append("Total price")
-                    .append(" ".repeat(spaceCount - ("Total price").length() - String.format("%.2f", totalPrice).length()))
+                    .append("Total productPrice")
+                    .append(" ".repeat(spaceCount - ("Total productPrice").length() - String.format("%.2f", totalPrice).length()))
                     .append(String.format("%.2f", totalPrice));
             return output.toString();
         }

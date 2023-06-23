@@ -30,7 +30,7 @@ public class DTOMapper {
         return productDTO.getTitle() +
                 ", category " +
                 productDTO.getCategory() +
-                ", price " +
+                ", productPrice " +
                 String.format("%.2f", productDTO.getPrice()) +
                 (productDTO.getAmount() == 0 ? ".  <- Нет в наличии!": ".");
     }
@@ -43,7 +43,7 @@ public class DTOMapper {
                 productDTO.getCategory() +
                 "," +
                 System.lineSeparator() +
-                "price " +
+                "productPrice " +
                 String.format("%.2f", productDTO.getPrice()) +
                 "," +
                 System.lineSeparator() +
