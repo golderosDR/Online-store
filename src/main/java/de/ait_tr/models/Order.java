@@ -4,16 +4,27 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Order {
-    private static int counter = 1;
     private final String dateTime;
-    private String orderId;
-    private ProductBasket productBasket;
+    private final String orderId;
+    private final int orderNumber;
+    private final String userId;
+    private final ProductBasket productBasket;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    Order(ProductBasket productBasket) {
-        this.orderId = "A00" + counter++;
+    Order(ProductBasket productBasket, int lastOrderNumber) {
+        this.orderId = "ORDER" + ++lastOrderNumber;
         this.dateTime = formatter.format(LocalDateTime.now());
         this.productBasket = productBasket;
+        this.orderNumber = ++lastOrderNumber;
+        this.userId = "Guest";
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public int getOrderNumber() {
+        return orderNumber;
     }
 
     public String getDateTime() {
@@ -26,5 +37,14 @@ public class Order {
 
     public ProductBasket getProductBasket() {
         return productBasket;
+    }
+    @Override
+    public String toString() {
+        return "Order{" +
+                "dateTime='" + dateTime + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", productBasket=" + productBasket +
+                '}';
     }
 }

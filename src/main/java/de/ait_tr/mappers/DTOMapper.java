@@ -38,6 +38,7 @@ public class DTOMapper {
     public static String toLineWithDescription(ProductDTO productDTO) {
         return productDTO.getTitle() + "," +
                 System.lineSeparator() +
+                (productDTO.getAmount() == 0 ? "Нет в наличии!" + System.lineSeparator(): "") +
                 "category " +
                 productDTO.getCategory() +
                 "," +
@@ -54,7 +55,7 @@ public class DTOMapper {
         StringBuilder output = new StringBuilder();
         for (ProductDTO productDTO : productDTOList) {
             output.append(counter++)
-                    .append(". ")
+                    .append(counter < 11 ? ".  ":". ")
                     .append(toLine(productDTO))
                     .append(System.lineSeparator());
         }

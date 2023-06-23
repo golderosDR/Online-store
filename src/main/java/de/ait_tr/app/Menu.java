@@ -46,7 +46,7 @@ public class Menu {
         switch (scanner.next()) {
             case "1" -> {
                 tempProductDTOList = getSortedList(productService.findAll(),
-                        Comparator.comparing(ProductDTO::getTitle));
+                        Comparator.comparing(ProductDTO::getTitleIgnoreCase));
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "2" -> {
@@ -161,11 +161,17 @@ public class Menu {
     }
 
     public void buyMenu() {
-        if (BasketValidator.validate(productBasket, productService.findAll())) {
+        List<String> errors = BasketValidator.validate(productBasket, productService.findAll());
+        if (errors.isEmpty()) {
+            //Order order = orderService.create(productBasket);
+            //orderService.update(order);
             productService.buy(productBasket);
+            //checkService.print(order);
             System.out.println(SHOPPING_SUCCESS_MSG);
         } else {
-            System.out.println(SHOPPING_FAIL_MSG);
+            System.out.println(errors.stream()
+                    .collect(Collectors.joining(System.lineSeparator()))
+            );
         }
     }
 
@@ -190,7 +196,7 @@ public class Menu {
         indexList.forEach(index -> randomProductList.add(productDTOList.get(index)));
         System.out.println(
                 randomProductList.stream()
-                        .sorted(Comparator.comparing(ProductDTO::getTitle))
+                        .sorted(Comparator.comparing(ProductDTO::getTitleIgnoreCase))
                         .map(DTOMapper::toLine)
                         .collect(Collectors.joining(System.lineSeparator()))
         );
@@ -205,8 +211,8 @@ public class Menu {
         switch (scanner.next()) {
             case "1" -> {
                 tempProductDTOList = getSortedList(tempProductDTOList,
-                        Comparator.comparing(ProductDTO::getTitle)
-                        );
+                        Comparator.comparing(ProductDTO::getTitleIgnoreCase)
+                );
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "2" -> {
@@ -230,12 +236,8 @@ public class Menu {
                 cancel();
             } else if (Integer.parseInt(command) <= tempProductDTOList.size()) {
                 ProductDTO tempProductDTO = tempProductDTOList.get(Integer.parseInt(command) - 1);
-                if (tempProductDTO.getAmount() != 0) {
-                    System.out.println(DTOMapper.toLineWithDescription(tempProductDTO));
-                    addToBasketSubmenu(tempProductDTO);
-                } else {
-                    System.out.println(PRODUCT_NOT_AVAILABLE_MSG);
-                }
+                System.out.println(DTOMapper.toLineWithDescription(tempProductDTO));
+                addToBasketSubmenu(tempProductDTO);
             } else {
                 wrongCommand();
             }
@@ -250,17 +252,21 @@ public class Menu {
         String command = scanner.next();
         switch (command) {
             case "1" -> {
-                System.out.println(ENTER_NUMBER_OF_PRODUCT_SUBMENU_TEXT);
-                command = scanner.next();
-                if (CommandValidator.validate(command)) {
-                    if (Integer.parseInt(command) > 0) {
-                        productBasket.add(tempProductDTO, Integer.parseInt(command));
-                        System.out.println(PRODUCT_ADDED_MSG);
+                if (tempProductDTO.getAmount() != 0) {
+                    System.out.println(ENTER_NUMBER_OF_PRODUCT_SUBMENU_TEXT);
+                    command = scanner.next();
+                    if (CommandValidator.validate(command)) {
+                        if (Integer.parseInt(command) > 0) {
+                            productBasket.add(tempProductDTO, Integer.parseInt(command));
+                            System.out.println(PRODUCT_ADDED_MSG);
+                        } else {
+                            wrongCommand();
+                        }
                     } else {
                         wrongCommand();
                     }
                 } else {
-                    wrongCommand();
+                    System.out.println(PRODUCT_NOT_AVAILABLE_MSG);
                 }
             }
             case "0" -> cancel();

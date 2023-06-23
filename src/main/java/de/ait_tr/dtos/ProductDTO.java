@@ -30,6 +30,9 @@ public class ProductDTO {
     public String getTitle() {
         return title;
     }
+    public String getTitleIgnoreCase() {
+        return title.toLowerCase();
+    }
 
     public double getPrice() {
         return price;
