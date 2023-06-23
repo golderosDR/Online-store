@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -19,13 +21,13 @@ class ProductRepositoryImplTest {
     @BeforeEach
     void setUp() {
         this.productRepositoryImpl = new ProductRepositoryImpl("Products1.csv");
-
-
     }
-
+@Nested
+    @DisplayName("Tests for method find")
+class  findTest {
 
     @Test
-    void find() {
+    void findFindsProduct() {
         //arrange
         String stringSearchInfo = "iphon";
         // action
@@ -35,9 +37,18 @@ class ProductRepositoryImplTest {
                 new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 8, "Powerful and stylish smartphone with advanced features"),
                 new ProductDTO("SMF0004", "iPhone SE", "SMF", 399.00, 8, "Compact and affordable iPhone with impressive performance.")
         ));
-
         assertEquals(expected, actual);
+    }
+    @Test
+    void findFindsNotProduct() {
+        //arrange
+        // action
+        // assert
+
+    }
 
 
     }
+
+
 }
