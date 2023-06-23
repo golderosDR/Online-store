@@ -57,7 +57,7 @@ public class ProductRepositoryImpl implements ProductRepository {
      * @param basketRecordDTOList
      * @return
      */
-    private List<Product> getUpdatedList(List<BasketRecordDTO> basketRecordDTOList) {
+    private List<Product> getUpdatedList(List<BasketRecordDTO> basketRecordDTOList) { //!!! не нужно тест
         List<Product> updatedProductList = getAll();
         for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
             for (Product product : updatedProductList) {
@@ -69,7 +69,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         return updatedProductList;
     }
     @Override
-    public void update(List<BasketRecordDTO> basketRecordDTOList) {
+    public void update(List<BasketRecordDTO> basketRecordDTOList) {  //!!!не нужно тест
         List<Product> productList = getUpdatedList(basketRecordDTOList);
         String lines = productList
                 .stream()
@@ -95,7 +95,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         return getAll()
                 .stream()
                 .filter(product -> (
-                                product.getTitle().contains(searchInfo)
+                                product.getTitle().toLowerCase().contains(searchInfo.toLowerCase())
                                         || product.getDescription().contains(searchInfo)
                         )
                 )
