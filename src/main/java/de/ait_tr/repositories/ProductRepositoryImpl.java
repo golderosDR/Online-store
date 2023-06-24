@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 
 
 public class ProductRepositoryImpl implements ProductRepository {
-    private final String fileName;
+    private final String filePath;
     private final static String FILE_NOT_FOUND_ERROR_MSG = "Файл не найден или поврежден!";
 
-    public ProductRepositoryImpl(String fileName) {
-        this.fileName = fileName;
+    public ProductRepositoryImpl(String filePath) {
+        this.filePath = filePath;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     private List<Product> getAll() {
         try {
-            return Files.readAllLines(new File(fileName).toPath())
+            return Files.readAllLines(new File(filePath).toPath())
                     .stream()
                     .map(ProductMapper::toProduct)
                     .toList();
@@ -76,7 +76,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .map(ProductMapper::toLine)
                 .collect(Collectors.joining(System.lineSeparator()));
 
-        try (FileWriter writer = new FileWriter(fileName);
+        try (FileWriter writer = new FileWriter(filePath);
              BufferedWriter buffWriter = new BufferedWriter(writer)) {
             buffWriter.write(lines);
         } catch (IOException e) {

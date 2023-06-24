@@ -16,7 +16,6 @@ public class ProductBasket {
     public ProductBasket( List<BasketRecordDTO> productsInBasket) {
         this.productsInBasket = productsInBasket;
     }
-
     public List<BasketRecordDTO> getProductsInBasket() {
         return productsInBasket;
     }
@@ -34,5 +33,8 @@ public class ProductBasket {
     }
     public void edit(int index, int newCount) {
         productsInBasket.get(index).setCount(newCount);
+    }
+    public void clear() {
+        productsInBasket.clear();
     }
 }

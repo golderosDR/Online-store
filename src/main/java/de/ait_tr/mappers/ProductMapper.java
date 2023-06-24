@@ -17,7 +17,7 @@ public class ProductMapper {
             String id = parsed[0];
             String title = parsed[1];
             String categoryAbbreviation = parsed[2];
-            double basicPrice = Double.parseDouble(parsed[3]);
+            double basicPrice = Double.parseDouble(parsed[3].replace(",", "."));
             int markup = Integer.parseInt(parsed[4]);
             int amount = Integer.parseInt(parsed[5]);
             String description = parsed[6];
@@ -34,7 +34,7 @@ public class ProductMapper {
             } else return null;
 
         } catch (RuntimeException e) {
-            throw new RuntimeException(ILLEGAL_FORMAT_OR_DAMAGED_FILE);
+            throw new RuntimeException(ILLEGAL_FORMAT_OR_DAMAGED_FILE + "  " + e.getMessage());
         }
     }
    public static String toLine(Product product) {
@@ -42,9 +42,9 @@ public class ProductMapper {
                ";" +
                product.getTitle() +
                ";" +
-               product.getCategory() +
+               product.getCategory().getAbbreviation() +
                ";" +
-               product.getBasicPrice() +
+               String.format("%.2f", product.getBasicPrice()) +
                ";" +
                product.getMarkup() +
                ";" +

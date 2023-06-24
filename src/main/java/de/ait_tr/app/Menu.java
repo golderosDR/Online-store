@@ -5,10 +5,11 @@ import de.ait_tr.mappers.BasketMapper;
 import de.ait_tr.mappers.CategoryMapper;
 import de.ait_tr.mappers.DTOMapper;
 import de.ait_tr.models.Category;
+import de.ait_tr.models.Order;
 import de.ait_tr.models.ProductBasket;
+import de.ait_tr.repositories.OrderRepositoryImpl;
 import de.ait_tr.repositories.ProductRepositoryImpl;
-import de.ait_tr.services.ProductService;
-import de.ait_tr.services.ProductServiceImpl;
+import de.ait_tr.services.*;
 import de.ait_tr.validators.BasketValidator;
 import de.ait_tr.validators.CommandValidator;
 
@@ -20,10 +21,18 @@ import static de.ait_tr.menutext.MenuText.*;
 public class Menu {
     private final ProductService productService;
     private final ProductBasket productBasket;
-    private static final String BASE_PRODUCTS_REPOSITORY_PATH = "Products.csv";
+    private final OrderService orderService;
+
+    private static final String BASE_PRODUCTS_FILE_PATH = "Products.csv";
+    private static final String BASE_ORDER_REPOSITORY_PATH = "./orders";
+    private static final String BASE_CHECK_SERVICE_FILE_PATH = "./check_printer/check_tape.txt";
 
     Menu() {
-        this.productService = new ProductServiceImpl(new ProductRepositoryImpl(BASE_PRODUCTS_REPOSITORY_PATH));
+        this.productService = new ProductServiceImpl(new ProductRepositoryImpl(BASE_PRODUCTS_FILE_PATH));
+        this.orderService = new OrderServiceImpl(
+                new OrderRepositoryImpl(BASE_ORDER_REPOSITORY_PATH),
+                new CheckServiceImpl(BASE_CHECK_SERVICE_FILE_PATH)
+        );
         this.productBasket = new ProductBasket();
     }
 
@@ -161,17 +170,31 @@ public class Menu {
     }
 
     public void buyMenu() {
+        Scanner scanner = new Scanner(System.in);
         List<String> errors = BasketValidator.validate(productBasket, productService.findAll());
         if (errors.isEmpty()) {
-            //Order order = orderService.create(productBasket);
-            //orderService.update(order);
-            productService.buy(productBasket);
-            //checkService.print(order);
-            System.out.println(SHOPPING_SUCCESS_MSG);
+/*            Order order = orderService.create(productBasket);
+            orderService.save(order);*/
+            Order order = orderService.create(productBasket);
+            System.out.printf("Заказ сформирован. Номер вашего заказа %d.%n", order.getOrderNumber());
+            System.out.println(BUY_SUBMENU_TEXT);
+            switch (scanner.next()) {
+                case "1" -> {
+                    orderService.save(order);
+                    productService.buy(productBasket);
+                    orderService.printCheck(order);
+                    productBasket.clear();
+                    System.out.println(SHOPPING_SUCCESS_MSG);
+                }
+                case "0" -> cancel();
+                default -> wrongCommand();
+            }
+
         } else {
             System.out.println(errors.stream()
                     .collect(Collectors.joining(System.lineSeparator()))
             );
+            System.out.println();
         }
     }
 

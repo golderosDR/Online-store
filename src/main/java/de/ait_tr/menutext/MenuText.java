@@ -13,7 +13,7 @@ public class MenuText {
     public final static String PRODUCT_NOT_AVAILABLE_MSG = "Товара нет в наличии.";
     public final static String EMPTY_BASKET_MENU_TEXT = """
             Корзина пуста.
-            0. Отмена.""";
+            0. Назад.""";
     public final static String MAIN_MENU_TEXT = """
             Введите необходимый пункт меню для выполнения:
             1. Вывести все товары.
@@ -35,7 +35,7 @@ public class MenuText {
     public final static String DESCRIPTION_SUBMENU_TEXT = """
             Просмотреть товар с описанием по номеру в списке.
             %s
-            0. Отмена.""";
+            0. Назад.""";
     public final static String ADD_TO_BASKET_SUBMENU_TEXT = """
             1. Добавить товар в корзину.
             0. Отмена.""";
@@ -51,12 +51,12 @@ public class MenuText {
             0. Отмена.""";
     public final static String BASKET_SUBMENU_TEXT = """
             1. Редактировать корзину.
-            2. Купить.
-            0. Отмена.""";
+            2. В кассу.
+            0. Назад.""";
     public final static String BASKET_EDIT_SUBMENU_TEXT = """
             1. Удалить товар из корзины.
             2. Изменить количество товара.
-            0. Отмена.""";
+            0. Назад""";
     public final static String BASKET_CHOOSE_SUBMENU_TEXT = """
             Введите номер позиции товара из списка:
             %s
@@ -69,6 +69,9 @@ public class MenuText {
             0. Отмена.""";
     public final static String ENTER_NEW_NUMBER_OF_PRODUCT_SUBMENU_TEXT = """
             Введите новое количество товара:
+            0. Отмена.""";
+    public final static String BUY_SUBMENU_TEXT = """
+            1. Купить.
             0. Отмена.""";
 
 }

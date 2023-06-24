@@ -53,7 +53,7 @@ public class OrderMapper {
 
     public static List<OrderRecord> toOrderRecordList(Order order) {
         List<OrderRecord> orderRecordList = new ArrayList<>();
-        for (BasketRecordDTO basketRecordDTO : order.getProductBasket().getProductsInBasket()) {
+        for (BasketRecordDTO basketRecordDTO : order.getProductBasket()) {
             orderRecordList.add(new OrderRecord
                     (
                             order.getDateTime(),
@@ -69,7 +69,7 @@ public class OrderMapper {
     }
 
     public static Order toOrder(List<OrderRecord> orderRecordList, List<ProductDTO> productDTOList) {
-        List<BasketRecordDTO> basketRecordDTOList = new ArrayList<>();
+        List<BasketRecordDTO> productBasket = new ArrayList<>();
         String dateTime = orderRecordList.get(0).dateTime();
         String orderTd = orderRecordList.get(0).orderId();
         int orderNumber = orderRecordList.get(0).orderNumber();
@@ -77,7 +77,7 @@ public class OrderMapper {
         for (OrderRecord orderRecord : orderRecordList) {
             for (ProductDTO productDTO : productDTOList) {
                 if (orderRecord.productId().equals(productDTO.getId()))
-                    basketRecordDTOList.add(
+                    productBasket.add(
                             new BasketRecordDTO(
                                     new ProductInBasketDTO(
                                             productDTO.getId(),
@@ -94,7 +94,7 @@ public class OrderMapper {
                 orderTd,
                 orderNumber,
                 userId,
-                new ProductBasket(basketRecordDTOList)
+                productBasket
         );
     }
 

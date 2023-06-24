@@ -33,7 +33,7 @@ public class Product {
         return basicPrice;
     }
 
-    public double getMarkup() {
+    public int getMarkup() {
         return markup;
     }
 
