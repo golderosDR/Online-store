@@ -7,7 +7,7 @@ public class CheckMapper {
     private static final String CHECK_PATTERN = """
                       “Horns and hooves” GMBH           |
                                                         |
-                          Check number: %s
+                          Check number: %s|
             --------------------------------------------|
             %s
             --------------------------------------------|
@@ -28,13 +28,13 @@ public class CheckMapper {
         for (BasketRecordDTO basketRecordDTO : order.getProductBasket()) {
             totalPrice += basketRecordDTO.getPrice() * basketRecordDTO.getCount();
 
-            output.append(DTOMapper.toLine(basketRecordDTO))
+            output.append(BasketMapper.toLine(basketRecordDTO))
                     .append("|")
                     .append(System.lineSeparator());
         }
         output.deleteCharAt(output.length()-1);
         return String.format(CHECK_PATTERN,
-                order.getOrderNumber() + " ".repeat(16 - String.valueOf(order.getOrderNumber()).length()) + "|",
+                order.getOrderNumber() + " ".repeat(16 - String.valueOf(order.getOrderNumber()).length()),
                 output,
                 " ".repeat(38 - String.format("%.2f",totalPrice).length()),
                 totalPrice

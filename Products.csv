@@ -2,7 +2,7 @@ SMF0001;iPhone 12;SMF;799,00;8;9;Powerful and stylish smartphone with advanced f
 SMF0002;Samsung Galaxy S21;SMF;899,00;8;9;High-performance smartphone with a stunning display.
 SMF0003;Google Pixel 5;SMF;699,00;8;10;Flagship smartphone with a top-notch camera system.
 SMF0004;iPhone SE;SMF;399,00;8;10;Compact and affordable iPhone with impressive performance.
-SMF0005;OnePlus 9 Pro;SMF;999,00;8;9;Premium Android smartphone with a smooth user experience.
+SMF0005;OnePlus 9 Pro;SMF;999,00;8;6;Premium Android smartphone with a smooth user experience.
 TVS0001;LG OLED CX Series;TVS;1499,00;10;3;High-quality OLED TVS with vivid colors and deep blacks.
 TVS0002;Sony X900H;TVS;1299,00;10;5;4K HDR TVS with impressive picture quality and smart features.
 TVS0003;Samsung Q90T;TVS;1599,00;10;5;QLED TVS with exceptional brightness and immersive viewing experience.
@@ -11,7 +11,7 @@ TVS0005;Vizio M-Series;TVS;699,00;10;4;Smart TVS with a modern design and vibran
 NTB0001;Dell XPS 15;NTB;1699,00;15;8;Powerful and sleek laptop for productivity and multimedia tasks.
 NTB0002;Apple MacBook Pro;NTB;1999,00;15;8;High-performance MacBook with a stunning Retina display.
 NTB0003;Lenovo ThinkPad X1 Carbon;NTB;1399,00;15;8;Business laptop with durability and security features.
-NTB0004;HP Spectre x360;NTB;1299,00;15;8;Convertible laptop with a touch display and long battery life.
+NTB0004;HP Spectre x360;NTB;1299,00;15;3;Convertible laptop with a touch display and long battery life.
 NTB0005;Asus ZenBook 14;NTB;999,00;15;6;Ultra-slim laptop with a powerful processor and premium design.
 TAB0001;iPad Air;TAB;599,00;12;12;Versatile tablet with a large display and Apple Pencil support.
 TAB0002;Samsung Galaxy Tab S7;TAB;699,00;12;12;Android tablet with a stunning AMOLED display and S Pen.

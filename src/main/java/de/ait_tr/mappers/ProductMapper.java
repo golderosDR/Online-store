@@ -8,7 +8,8 @@ import java.util.Arrays;
 public class ProductMapper {
     public static String ILLEGAL_FORMAT_OR_DAMAGED_FILE = "Файл содержит элементы неподдерживаемого формата или поврежден.";
     private static final String DELIMITER = ";";
-    ProductMapper() {
+    private static final int REQUIRED_SIZE = 7;
+            ProductMapper() {
 
     }
     public static Product toProduct(String line) {
@@ -26,8 +27,14 @@ public class ProductMapper {
                             .filter(c -> c.getAbbreviation().equals(categoryAbbreviation))
                             .findFirst()
                             .orElse(null);
+            Product product;
+            if (parsed.length == REQUIRED_SIZE) {
+                product = new Product(id, title, category, basicPrice, markup, amount, description);
+            } else {
+                throw new RuntimeException(ILLEGAL_FORMAT_OR_DAMAGED_FILE);
+            }
 
-            Product product = new Product(id, title, category, basicPrice, markup, amount, description);
+
 
             if (ProductValidator.validate(product)) {
                 return product;

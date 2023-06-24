@@ -26,7 +26,7 @@ public class ProductBasket {
                return;
             }
         }
-        productsInBasket.add(DTOMapper.toProductInBasketDTO(productDTO, count));
+        productsInBasket.add(DTOMapper.toBasketRecordDTO(productDTO, count));
     }
     public void remove(int index) {
         productsInBasket.remove(index);
@@ -36,5 +36,12 @@ public class ProductBasket {
     }
     public void clear() {
         productsInBasket.clear();
+    }
+
+    @Override
+    public String toString() {
+        return "ProductBasket{" +
+                "productsInBasket=" + productsInBasket +
+                '}';
     }
 }

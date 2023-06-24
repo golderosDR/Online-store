@@ -1,6 +1,8 @@
 package de.ait_tr.dtos;
 
-public record ProductInBasketDTO(String productId, String productTitle, double productPrice) {
+public record ProductInBasketDTO(String productId,
+                                 String productTitle,
+                                 double productPrice) {
 
     @Override
     public String toString() {

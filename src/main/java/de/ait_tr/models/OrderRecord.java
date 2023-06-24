@@ -1,6 +1,10 @@
 package de.ait_tr.models;
 
-public record OrderRecord(String dateTime, String orderId, int orderNumber, String userId, String productId,
+public record OrderRecord(String dateTime,
+                          String orderId,
+                          int orderNumber,
+                          String userId,
+                          String productId,
                           int count) {
 
     @Override

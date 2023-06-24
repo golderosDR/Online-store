@@ -12,6 +12,7 @@ import java.util.List;
 public class OrderMapper {
     public static String ILLEGAL_FORMAT_OR_DAMAGED_FILE = "Файл содержит элементы неподдерживаемого формата или поврежден.";
     private static final String DELIMITER = ";";
+    private static final int REQUIRED_SIZE = 6;
 
     private OrderMapper() {
     }
@@ -25,8 +26,13 @@ public class OrderMapper {
             String userId = parsed[3];
             String productId = parsed[4];
             int count = Integer.parseInt(parsed[5]);
+            OrderRecord orderRecord;
 
-            OrderRecord orderRecord = new OrderRecord(dateTime, orderId, orderNumber, userId, productId, count);
+            if (parsed.length == REQUIRED_SIZE) {
+                orderRecord = new OrderRecord(dateTime, orderId, orderNumber, userId, productId, count);
+            } else {
+                throw new RuntimeException(ILLEGAL_FORMAT_OR_DAMAGED_FILE);
+            }
 
             if (OrderRecordValidator.validate(orderRecord)) {
                 return orderRecord;

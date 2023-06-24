@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public class DTOMapper {
-    private static final int POINT_NAME_MAX_LENGTH = 44;
 
     private DTOMapper() {
     }
@@ -62,27 +61,12 @@ public class DTOMapper {
         return output.toString();
     }
 
-    public static BasketRecordDTO toProductInBasketDTO(ProductDTO productDTO, int count) {
-        return new BasketRecordDTO(toProductInBasketDTO(productDTO), count);
+    public static BasketRecordDTO toBasketRecordDTO(ProductDTO productDTO, int count) {
+        return new BasketRecordDTO(toBasketRecordDTO(productDTO), count);
     }
-    public static ProductInBasketDTO toProductInBasketDTO(ProductDTO productDTO) {
+    public static ProductInBasketDTO toBasketRecordDTO(ProductDTO productDTO) {
         return new ProductInBasketDTO(productDTO.getId(), productDTO.getTitle(), productDTO.getPrice());
     }
 
-    public static String toLine(BasketRecordDTO basketRecordDTO) {
-        StringBuilder output = new StringBuilder();
-        String title = basketRecordDTO.getTitle();
-        String price = String.format("%.2f", basketRecordDTO.getPrice());
-        String count = String.valueOf(basketRecordDTO.getCount());
-        int spacesCount = POINT_NAME_MAX_LENGTH
-                - title.length()
-                - price.length()
-                - count.length() - 3;
-        output.append(title)
-                .append(" ".repeat(spacesCount))
-                .append(count)
-                .append(" X ")
-                .append(price);
-        return output.toString();
-    }
+
 }

@@ -173,8 +173,6 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         List<String> errors = BasketValidator.validate(productBasket, productService.findAll());
         if (errors.isEmpty()) {
-/*            Order order = orderService.create(productBasket);
-            orderService.save(order);*/
             Order order = orderService.create(productBasket);
             System.out.printf("Заказ сформирован. Номер вашего заказа %d.%n", order.getOrderNumber());
             System.out.println(BUY_SUBMENU_TEXT);

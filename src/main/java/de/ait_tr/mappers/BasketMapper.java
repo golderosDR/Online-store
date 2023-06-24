@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BasketMapper {
     private static final int placeForX = 3;
+    private static final int POINT_NAME_MAX_LENGTH = 44;
     private BasketMapper() {
     }
 
@@ -16,13 +17,13 @@ public class BasketMapper {
             return "Корзина пуста";
         } else {
             double totalPrice = 0;
-            int spaceCount = DTOMapper.toLine(basketRecordDTOList.get(0)).length() + placeForX;
+            int spaceCount = toLine(basketRecordDTOList.get(0)).length() + placeForX;
 
             for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
                 totalPrice += basketRecordDTO.getPrice() * basketRecordDTO.getCount();
                 output.append(counter++)
                         .append(". ")
-                        .append(DTOMapper.toLine(basketRecordDTO))
+                        .append(toLine(basketRecordDTO))
                         .append(System.lineSeparator());
             }
             output.append(System.lineSeparator())
@@ -31,5 +32,21 @@ public class BasketMapper {
                     .append(String.format("%.2f", totalPrice));
             return output.toString();
         }
+    }
+    public static String toLine(BasketRecordDTO basketRecordDTO) {
+        StringBuilder output = new StringBuilder();
+        String title = basketRecordDTO.getTitle();
+        String price = String.format("%.2f", basketRecordDTO.getPrice());
+        String count = String.valueOf(basketRecordDTO.getCount());
+        int spacesCount = POINT_NAME_MAX_LENGTH
+                - title.length()
+                - price.length()
+                - count.length() - 3;
+        output.append(title)
+                .append(" ".repeat(spacesCount))
+                .append(count)
+                .append(" X ")
+                .append(price);
+        return output.toString();
     }
 }
