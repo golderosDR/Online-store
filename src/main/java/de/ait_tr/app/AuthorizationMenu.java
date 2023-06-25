@@ -14,7 +14,6 @@ import static de.ait_tr.menutext.AuthorizationMenuText.*;
 
 public class AuthorizationMenu {
     private final UserService userService;
-    private String userId;
     private static final String BASE_USERS_FILE_PATH = "./Databases/UserDB/users.csv";
     private static final String BASE_ORDER_REPOSITORY_PATH = "./orders";
     private static final String BASE_CHECK_SERVICE_FILE_PATH = "./check_printer/check_tape.txt";
@@ -26,7 +25,6 @@ public class AuthorizationMenu {
                         new OrderRepositoryImpl(BASE_ORDER_REPOSITORY_PATH),
                         new CheckServiceImpl(BASE_CHECK_SERVICE_FILE_PATH))
         );
-        this.userId = null;
     }
 
     public void cancel() {
@@ -41,9 +39,6 @@ public class AuthorizationMenu {
         System.out.println(GO_BACK_MSG);
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public void showMainMenu() {
         System.out.println("              Horns and hooves GMBH");
