@@ -5,6 +5,7 @@ import de.ait_tr.models.Order;
 
 public class CheckMapper {
     private static final String CHECK_PATTERN = """
+                      
                       “Horns and hooves” GMBH           |
                                                         |
                           Check number: %s|
@@ -14,7 +15,6 @@ public class CheckMapper {
             Total:%s%.2f|
                                                         |
                     Thank you for your purchase!        |
-
 
 
             """;

@@ -13,7 +13,7 @@ public class OrderRecordValidator {
             errors.append(WRONG_ORDER_DATE_TIME_FORMAT_MESSAGE)
                     .append(" ");
         }
-        if (!orderRecord.orderId().matches("ORDER\\d+")) {
+        if (!orderRecord.orderId().matches("\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}")) {
             errors.append(WRONG_ORDER_ID_FORMAT_MESSAGE)
                     .append(" ");
         }

@@ -5,6 +5,7 @@ import de.ait_tr.dtos.BasketRecordDTO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 public class Order {
     private final String dateTime;
@@ -14,12 +15,12 @@ public class Order {
     private final List<BasketRecordDTO> productBasket;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public Order(List<BasketRecordDTO> productBasket, int lastOrderNumber) {
-        this.orderId = "ORDER" + ++lastOrderNumber;
+    public Order(List<BasketRecordDTO> productBasket, int lastOrderNumber, String userId) {
+        this.orderId = UUID.randomUUID().toString();
         this.dateTime = formatter.format(LocalDateTime.now());
         this.productBasket = productBasket;
-        this.orderNumber = lastOrderNumber;
-        this.userId = "Guest";
+        this.orderNumber = ++lastOrderNumber;
+        this.userId = userId;
     }
 
     public Order(String dateTime, String orderId, int orderNumber, String userId, List<BasketRecordDTO>  productBasket) {

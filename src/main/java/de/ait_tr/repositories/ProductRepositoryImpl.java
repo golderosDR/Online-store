@@ -2,7 +2,7 @@ package de.ait_tr.repositories;
 
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.BasketRecordDTO;
-import de.ait_tr.mappers.DTOMapper;
+import de.ait_tr.mappers.ProductDTOMapper;
 import de.ait_tr.mappers.ProductMapper;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.Product;
@@ -28,7 +28,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     public List<ProductDTO> findAll() {
         return getAll()
                 .stream()
-                .map(DTOMapper::toProductDTO)
+                .map(ProductDTOMapper::toProductDTO)
                 .toList();
     }
 
@@ -48,7 +48,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         return getAll()
                 .stream()
                 .filter(product -> product.getCategory().equals(category))
-                .map(DTOMapper::toProductDTO)
+                .map(ProductDTOMapper::toProductDTO)
                 .toList();
     }
     /**
@@ -99,7 +99,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                                         || product.getDescription().contains(searchInfo)
                         )
                 )
-                .map(DTOMapper::toProductDTO)
+                .map(ProductDTOMapper::toProductDTO)
                 .toList();
     }
 
@@ -117,7 +117,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                                 product.getId().equals(id)
                         )
                 )
-                .map(DTOMapper::toProductDTO)
+                .map(ProductDTOMapper::toProductDTO)
                 .findFirst()
                 .orElse(null);
     }

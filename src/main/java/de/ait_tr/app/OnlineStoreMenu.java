@@ -3,12 +3,13 @@ package de.ait_tr.app;
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.mappers.BasketMapper;
 import de.ait_tr.mappers.CategoryMapper;
-import de.ait_tr.mappers.DTOMapper;
+import de.ait_tr.mappers.ProductDTOMapper;
 import de.ait_tr.models.Category;
 import de.ait_tr.models.Order;
 import de.ait_tr.models.ProductBasket;
 import de.ait_tr.repositories.OrderRepositoryImpl;
 import de.ait_tr.repositories.ProductRepositoryImpl;
+import de.ait_tr.repositories.UserRepositoryImpl;
 import de.ait_tr.services.*;
 import de.ait_tr.validators.BasketValidator;
 import de.ait_tr.validators.CommandValidator;
@@ -16,24 +17,34 @@ import de.ait_tr.validators.CommandValidator;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static de.ait_tr.menutext.MenuText.*;
+import static de.ait_tr.menutext.OnlineStoreMenuText.*;
 
-public class Menu {
+public class OnlineStoreMenu {
     private final ProductService productService;
     private final ProductBasket productBasket;
     private final OrderService orderService;
+    private final UserService userService;
+    private final String userId;
 
-    private static final String BASE_PRODUCTS_FILE_PATH = "Products.csv";
+    private static final String BASE_PRODUCTS_FILE_PATH = "./Databases/productDB/Products.csv";
     private static final String BASE_ORDER_REPOSITORY_PATH = "./orders";
     private static final String BASE_CHECK_SERVICE_FILE_PATH = "./check_printer/check_tape.txt";
+    private static final String BASE_USERS_FILE_PATH = "./Databases/UserDB/users.csv";
 
-    Menu() {
+    OnlineStoreMenu(String userId) {
         this.productService = new ProductServiceImpl(new ProductRepositoryImpl(BASE_PRODUCTS_FILE_PATH));
         this.orderService = new OrderServiceImpl(
                 new OrderRepositoryImpl(BASE_ORDER_REPOSITORY_PATH),
                 new CheckServiceImpl(BASE_CHECK_SERVICE_FILE_PATH)
         );
+        this.userService = new UserServiceImpl(
+                new UserRepositoryImpl(BASE_USERS_FILE_PATH),
+                new OrderServiceImpl(
+                        new OrderRepositoryImpl(BASE_ORDER_REPOSITORY_PATH),
+                        new CheckServiceImpl(BASE_CHECK_SERVICE_FILE_PATH))
+        );
         this.productBasket = new ProductBasket();
+        this.userId = userId;
     }
 
     public void cancel() {
@@ -42,6 +53,9 @@ public class Menu {
 
     public void wrongCommand() {
         System.out.println(WRONG_COMMAND);
+    }
+    public void goBack() {
+        System.out.println(GO_BACK);
     }
 
     public void showMainMenu() {
@@ -60,12 +74,12 @@ public class Menu {
             }
             case "2" -> {
                 tempProductDTOList = getSortedList(productService.findAll(),
-                        Comparator.comparing(ProductDTO::getCategory));
+                        Comparator.comparing(ProductDTO::category));
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "3" -> {
                 tempProductDTOList = getSortedList(productService.findAll(),
-                        Comparator.comparing(ProductDTO::getPrice));
+                        Comparator.comparing(ProductDTO::price));
                 chooseFromListSubmenu(tempProductDTOList);
             }
             case "0" -> cancel();
@@ -162,7 +176,7 @@ public class Menu {
                 switch (temp = scanner.next()) {
                     case "1" -> editBasketMenu();
                     case "2" -> buyMenu();
-                    case "0" -> cancel();
+                    case "0" -> goBack();
                     default -> wrongCommand();
                 }
             }
@@ -173,7 +187,7 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         List<String> errors = BasketValidator.validate(productBasket, productService.findAll());
         if (errors.isEmpty()) {
-            Order order = orderService.create(productBasket);
+            Order order = orderService.create(productBasket, userId);
             System.out.printf("Заказ сформирован. Номер вашего заказа %d.%n", order.getOrderNumber());
             System.out.println(BUY_SUBMENU_TEXT);
             switch (scanner.next()) {
@@ -200,14 +214,13 @@ public class Menu {
      * print 10 random products
      */
     public void greeting() {
-        //TODO userService
-        String userName = "Guest";
-        System.out.printf("     Horns and hooves GMBH%n    Добро прожаловать, %s!%n%n", userName);
+        String userName = userService.findById(userId).name();
+        System.out.printf("              Horns and hooves GMBH%n              Добро прожаловать, %s!%n%n", userName);
         Random random = new Random();
         Set<Integer> indexList = new HashSet<>();
         List<ProductDTO> productDTOList = productService.findAll()
                 .stream()
-                .filter(productDTO -> productDTO.getAmount() != 0)
+                .filter(productDTO -> productDTO.amount() != 0)
                 .toList();
         List<ProductDTO> randomProductList = new ArrayList<>();
 
@@ -218,7 +231,7 @@ public class Menu {
         System.out.println(
                 randomProductList.stream()
                         .sorted(Comparator.comparing(ProductDTO::getTitleIgnoreCase))
-                        .map(DTOMapper::toLine)
+                        .map(ProductDTOMapper::toLine)
                         .collect(Collectors.joining(System.lineSeparator()))
         );
         System.out.println();
@@ -238,7 +251,7 @@ public class Menu {
             }
             case "2" -> {
                 tempProductDTOList = getSortedList(tempProductDTOList,
-                        Comparator.comparing(ProductDTO::getPrice)
+                        Comparator.comparing(ProductDTO::price)
                 );
                 chooseFromListSubmenu(tempProductDTOList);
             }
@@ -250,14 +263,14 @@ public class Menu {
     private void chooseFromListSubmenu(List<ProductDTO> tempProductDTOList) {
         Scanner scanner = new Scanner(System.in);
         System.out.printf(DESCRIPTION_SUBMENU_TEXT + System.lineSeparator(),
-                DTOMapper.toNumeratedProductDTOLines(tempProductDTOList));
+                ProductDTOMapper.toNumeratedProductDTOLines(tempProductDTOList));
         String command = scanner.next();
         if (CommandValidator.validate(command)) {
             if (Integer.parseInt(command) == 0) {
-                cancel();
+                goBack();
             } else if (Integer.parseInt(command) <= tempProductDTOList.size()) {
                 ProductDTO tempProductDTO = tempProductDTOList.get(Integer.parseInt(command) - 1);
-                System.out.println(DTOMapper.toLineWithDescription(tempProductDTO));
+                System.out.println(ProductDTOMapper.toLineWithDescription(tempProductDTO));
                 addToBasketSubmenu(tempProductDTO);
             } else {
                 wrongCommand();
@@ -273,7 +286,7 @@ public class Menu {
         String command = scanner.next();
         switch (command) {
             case "1" -> {
-                if (tempProductDTO.getAmount() != 0) {
+                if (tempProductDTO.amount() != 0) {
                     System.out.println(ENTER_NUMBER_OF_PRODUCT_SUBMENU_TEXT);
                     command = scanner.next();
                     if (CommandValidator.validate(command)) {
@@ -308,7 +321,7 @@ public class Menu {
         switch (scanner.next()) {
             case "1" -> removeFromBasketSubmenu();
             case "2" -> editCountBasketSubmenu();
-            case "0" -> cancel();
+            case "0" -> goBack();
             default -> wrongCommand();
         }
     }

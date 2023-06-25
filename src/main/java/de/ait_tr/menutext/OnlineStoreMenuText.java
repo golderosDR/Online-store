@@ -1,9 +1,11 @@
 package de.ait_tr.menutext;
 
-public class MenuText {
-    private MenuText(){}
+public class OnlineStoreMenuText {
+    private OnlineStoreMenuText(){}
     public final static String CANCEL_OPERATION = "Операция отменена.";
     public final static String WRONG_COMMAND = "Команда не распознана.";
+    public final static String GO_BACK = "<-";
+
     public final static String WRONG_SEARCH_INFO_LENGTH_MSG = "Введенное слово для поиска слишком короткое!";
     public final static String NO_DATA_FOUND_MSG = "По вашему запросу '%s' ничего не найдено.%n";
     public final static String PRODUCT_ADDED_MSG = "Товар добавлен в корзину.";
@@ -20,7 +22,7 @@ public class MenuText {
             2. Вывести товары по категории.
             3. Поиск товара.
             4. Корзина(%s).
-            0. Выход.""";
+            0. Назад.""";
     public final static String SORTING_ALL_SUBMENU_TEXT = """
             Отсортировать товары по:
             1. Названию.

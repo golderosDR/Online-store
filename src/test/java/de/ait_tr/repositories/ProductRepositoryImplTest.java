@@ -6,11 +6,10 @@ import de.ait_tr.dtos.ProductInBasketDTO;
 import de.ait_tr.models.Category;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class ProductRepositoryImplTest {

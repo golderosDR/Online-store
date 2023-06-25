@@ -2,7 +2,7 @@ package de.ait_tr.models;
 
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.dtos.BasketRecordDTO;
-import de.ait_tr.mappers.DTOMapper;
+import de.ait_tr.mappers.ProductDTOMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,12 @@ public class ProductBasket {
     }
     public void add(ProductDTO productDTO, int count) {
         for (BasketRecordDTO basketRecordDTO : productsInBasket) {
-            if (basketRecordDTO.getId().equals(productDTO.getId())) {
+            if (basketRecordDTO.getId().equals(productDTO.id())) {
                basketRecordDTO.setCount(basketRecordDTO.getCount() + count);
                return;
             }
         }
-        productsInBasket.add(DTOMapper.toBasketRecordDTO(productDTO, count));
+        productsInBasket.add(ProductDTOMapper.toBasketRecordDTO(productDTO, count));
     }
     public void remove(int index) {
         productsInBasket.remove(index);

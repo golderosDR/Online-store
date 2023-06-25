@@ -5,7 +5,5 @@ import de.ait_tr.models.ProductBasket;
 
 public interface OrderRepository {
     void save(Order order);
-
-    Order create(ProductBasket productBasket);
-
+    Order create(ProductBasket productBasket, String userid);
 }

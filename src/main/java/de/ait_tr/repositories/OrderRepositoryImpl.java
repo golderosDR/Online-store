@@ -41,9 +41,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public Order create(ProductBasket productBasket) {
+    public Order create(ProductBasket productBasket, String userid) {
         int lastOrderNumber = getLastOrderNumber();
-        return new Order(productBasket.getProductsInBasket(), lastOrderNumber);
+        return new Order(productBasket.getProductsInBasket(), lastOrderNumber, userid);
     }
 
     private int getLastOrderNumber() {

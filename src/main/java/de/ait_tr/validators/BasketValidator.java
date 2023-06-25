@@ -18,12 +18,12 @@ public class BasketValidator {
         for (BasketRecordDTO basketRecordDTO : basketRecordDTOList) {
 
             for (ProductDTO productDTO : productDTOList) {
-                if (basketRecordDTO.getId().equals(productDTO.getId())) {
-                    if (basketRecordDTO.getCount() > productDTO.getAmount()) {
+                if (basketRecordDTO.getId().equals(productDTO.id())) {
+                    if (basketRecordDTO.getCount() > productDTO.amount()) {
                        errors.add(String.format("Недостаточно товара '%s' в наличии. Запрошено %d, в наличии %d!",
-                               productDTO.getTitle(),
+                               productDTO.title(),
                                basketRecordDTO.getCount(),
-                               productDTO.getAmount()
+                               productDTO.amount()
                                )
                        );
                     }
