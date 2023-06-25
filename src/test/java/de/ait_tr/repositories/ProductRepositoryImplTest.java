@@ -1,6 +1,8 @@
 package de.ait_tr.repositories;
 
+import de.ait_tr.dtos.BasketRecordDTO;
 import de.ait_tr.dtos.ProductDTO;
+import de.ait_tr.dtos.ProductInBasketDTO;
 import de.ait_tr.models.Category;
 import org.junit.jupiter.api.*;
 
@@ -81,6 +83,18 @@ class ProductRepositoryImplTest {
         }
     }
 
+    @Nested
+    @DisplayName("Tests for method Update")
+    class UpdateTests {
+        @Test
+        void Update_basketRecordDTOList_OUT_Void_success() {
+            productRepositoryImpl.update(basketRecordDTOList);
+            List<ProductDTO> actual = productRepositoryImpl.findAll();
+            assertEquals(upDateExpected, actual);
+        }
+    }
+
+
     private final List<ProductDTO> findAllExpected = new ArrayList<>(List.of(
             new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 8, "Powerful and stylish smartphone with advanced features."),
             new ProductDTO("SMF0002", "Samsung Galaxy S21", "SMF", 899.00, 8, "High-performance smartphone with a stunning display."),
@@ -118,5 +132,34 @@ class ProductRepositoryImplTest {
     private final List<ProductDTO> findExpected = new ArrayList<>(List.of(
             new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 8, "Powerful and stylish smartphone with advanced features"),
             new ProductDTO("SMF0004", "iPhone SE", "SMF", 399.00, 8, "Compact and affordable iPhone with impressive performance.")
+    ));
+
+    private final List<BasketRecordDTO> basketRecordDTOList = new ArrayList<>(
+            List.of(
+                    new BasketRecordDTO(new ProductInBasketDTO("SMF0001", "iPhone 12", 799.00), 1),
+                    new BasketRecordDTO(new ProductInBasketDTO("SMF0002", "Samsung Galaxy S21", 899.00), 2),
+                    new BasketRecordDTO(new ProductInBasketDTO("SMF0003", "Google Pixel 5", 699.00), 0)
+            ));
+    private final List<ProductDTO> upDateExpected = new ArrayList<>(List.of(
+            new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 7, "Powerful and stylish smartphone with advanced features."),
+            new ProductDTO("SMF0002", "Samsung Galaxy S21", "SMF", 899.00, 6, "High-performance smartphone with a stunning display."),
+            new ProductDTO("SMF0003", "Google Pixel 5", "SMF", 699.00, 8, "Flagship smartphone with a top-notch camera system."),
+            new ProductDTO("SMF0004", "iPhone SE", "SMF", 399.00, 8, "Compact and affordable iPhone with impressive performance."),
+            new ProductDTO("SMF0005", "OnePlus 9 Pro", "SMF", 999.00, 8, "Premium Android smartphone with a smooth user experience."),
+            new ProductDTO("TVS0001", "LG OLED CX Series", "TVS", 1499.00, 10, "High-quality OLED TVS with vivid colors and deep blacks."),
+            new ProductDTO("TVS0002", "Sony X900H", "TVS", 1299.00, 10, "4K HDR TVS with impressive picture quality and smart features."),
+            new ProductDTO("TVS0003", "Samsung Q90T", "TVS", 1599.00, 10, "QLED TVS with exceptional brightness and immersive viewing experience."),
+            new ProductDTO("TVS0004", "TCL 6-Series", "TVS", 799.00, 10, "Affordable 4K TVS with excellent picture performance and Roku platform."),
+            new ProductDTO("TVS0005", "Vizio M-Series", "TVS", 699.00, 10, "Smart TVS with a modern design and vibrant visuals."),
+            new ProductDTO("NTB0001", "Dell XPS 15", "NTB", 1699.00, 15, "Powerful and sleek laptop for productivity and multimedia tasks."),
+            new ProductDTO("NTB0002", "Apple MacBook Pro", "NTB", 1999.00, 15, "High-performance MacBook with a stunning Retina display."),
+            new ProductDTO("NTB0003", "Lenovo ThinkPad X1 Carbon", "NTB", 1399.00, 15, "Business laptop with durability and security features."),
+            new ProductDTO("NTB0004", "HP Spectre x360", "NTB", 1299.00, 15, "Convertible laptop with a touch display and long battery life."),
+            new ProductDTO("NTB0005", "Asus ZenBook 14", "NTB", 999.00, 15, "Ultra-slim laptop with a powerful processor and premium design."),
+            new ProductDTO("TAB0001", "iPad Air", "TAB", 599.00, 12, "Versatile tablet with a large display and Apple Pencil support."),
+            new ProductDTO("TAB0002", "Samsung Galaxy Tab S7", "TAB", 699.00, 12, "Android tablet with a stunning AMOLED display and S Pen."),
+            new ProductDTO("TAB0003", "Microsoft Surface Pro 7", "TAB", 899.00, 12, "2-in-1 tablet with a detachable keyboard and Windows 10."),
+            new ProductDTO("TAB0004", "Amazon Fire HD 10", "TAB", 149.00, 12, "Affordable tablet with a vibrant display and ACSess to Amazon services."),
+            new ProductDTO("TAB0005", "Lenovo Tab M10 Plus", "TAB", 249.00, 12, "Family-friendly tablet with dual speakers and a kid's mode.")
     ));
 }
