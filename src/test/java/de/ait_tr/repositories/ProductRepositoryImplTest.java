@@ -2,17 +2,13 @@ package de.ait_tr.repositories;
 
 import de.ait_tr.dtos.ProductDTO;
 import de.ait_tr.models.Category;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 class ProductRepositoryImplTest {
@@ -61,8 +57,7 @@ class ProductRepositoryImplTest {
         void findById_999999_OUT_Empty_List_success() {
             String stringSearchInfo = "999999";
             ProductDTO actual = productRepositoryImpl.findById(stringSearchInfo);
-            ProductDTO expected = null;
-            assertEquals(expected, actual);
+            Assertions.assertNull(actual);
         }
     }
 
@@ -86,7 +81,7 @@ class ProductRepositoryImplTest {
         }
     }
 
-    private List<ProductDTO> findAllExpected = new ArrayList<>(List.of(
+    private final List<ProductDTO> findAllExpected = new ArrayList<>(List.of(
             new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 8, "Powerful and stylish smartphone with advanced features."),
             new ProductDTO("SMF0002", "Samsung Galaxy S21", "SMF", 899.00, 8, "High-performance smartphone with a stunning display."),
             new ProductDTO("SMF0003", "Google Pixel 5", "SMF", 699.00, 8, "Flagship smartphone with a top-notch camera system."),
@@ -108,7 +103,7 @@ class ProductRepositoryImplTest {
             new ProductDTO("TAB0004", "Amazon Fire HD 10", "TAB", 149.00, 12, "Affordable tablet with a vibrant display and ACSess to Amazon services."),
             new ProductDTO("TAB0005", "Lenovo Tab M10 Plus", "TAB", 249.00, 12, "Family-friendly tablet with dual speakers and a kid's mode.")
     ));
-    private List<ProductDTO> findByCategoryExpected =
+    private final List<ProductDTO> findByCategoryExpected =
             new ArrayList<>(List.of(
                     new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 8, "Powerful and stylish smartphone with advanced features."),
                     new ProductDTO("SMF0002", "Samsung Galaxy S21", "SMF", 899.00, 8, "High-performance smartphone with a stunning display."),
@@ -117,10 +112,10 @@ class ProductRepositoryImplTest {
                     new ProductDTO("SMF0005", "OnePlus 9 Pro", "SMF", 999.00, 8, "Premium Android smartphone with a smooth user experience.")
             ));
 
-    private ProductDTO findByIdExpected = new ProductDTO(
+    private final ProductDTO findByIdExpected = new ProductDTO(
             "SMF0005", "OnePlus 9 Pro", "SMF", 999.00, 8, "Premium Android smartphone with a smooth user experience.");
 
-    private List<ProductDTO> findExpected = new ArrayList<>(List.of(
+    private final List<ProductDTO> findExpected = new ArrayList<>(List.of(
             new ProductDTO("SMF0001", "iPhone 12", "SMF", 799.00, 8, "Powerful and stylish smartphone with advanced features"),
             new ProductDTO("SMF0004", "iPhone SE", "SMF", 399.00, 8, "Compact and affordable iPhone with impressive performance.")
     ));
