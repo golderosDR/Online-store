@@ -1,7 +1,7 @@
 SMF0001;iPhone 12;SMF;799,00;8;9;Powerful and stylish smartphone with advanced features.
 SMF0002;Samsung Galaxy S21;SMF;899,00;8;9;High-performance smartphone with a stunning display.
 SMF0003;Google Pixel 5;SMF;699,00;8;10;Flagship smartphone with a top-notch camera system.
-SMF0004;iPhone SE;SMF;399,00;8;9;Compact and affordable iPhone with impressive performance.
+SMF0004;iPhone SE;SMF;399,00;8;8;Compact and affordable iPhone with impressive performance.
 SMF0005;OnePlus 9 Pro;SMF;999,00;8;6;Premium Android smartphone with a smooth user experience.
 TVS0001;LG OLED CX Series;TVS;1499,00;10;3;High-quality OLED TVS with vivid colors and deep blacks.
 TVS0002;Sony X900H;TVS;1299,00;10;5;4K HDR TVS with impressive picture quality and smart features.
@@ -17,7 +17,7 @@ TAB0001;iPad Air;TAB;599,00;12;12;Versatile tablet with a large display and Appl
 TAB0002;Samsung Galaxy Tab S7;TAB;699,00;12;12;Android tablet with a stunning AMOLED display and S Pen.
 TAB0003;Microsoft Surface Pro 7;TAB;899,00;12;12;2-in-1 tablet with a detachable keyboard and Windows 10.
 TAB0004;Amazon Fire HD 10;TAB;149,00;12;1;Affordable tablet with a vibrant display and ACSess to Amazon services.
-TAB0005;Lenovo Tab M10 Plus;TAB;249,00;12;12;Family-friendly tablet with dual speakers and a kid's mode.
+TAB0005;Lenovo Tab M10 Plus;TAB;249,00;12;10;Family-friendly tablet with dual speakers and a kid's mode.
 HLT0001;Fitbit Charge 4;HLT;129,00;20;12;Advanced fitness tracker with built-in GPS and heart rate monitoring.
 HLT0002;NordicTrack T Series Treadmill;HLT;999,00;20;15;High-quality treadmill for home workouts with adjustable incline.
 HLT0003;Bowflex Adjustable Dumbbells;HLT;399,00;20;15;Space-saving dumbbells with adjustable weight for versatile strength training.
