@@ -5,6 +5,7 @@ public record OrderRecord(String dateTime,
                           int orderNumber,
                           String userId,
                           String productId,
+                          double productPrice,
                           int count) {
 
     @Override
@@ -15,6 +16,7 @@ public record OrderRecord(String dateTime,
                 ", orderNumber=" + orderNumber +
                 ", userId='" + userId + '\'' +
                 ", productId='" + productId + '\'' +
+                ", productPrice=" + productPrice +
                 ", count=" + count +
                 '}';
     }
