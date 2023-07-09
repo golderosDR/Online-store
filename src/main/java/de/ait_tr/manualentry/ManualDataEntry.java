@@ -65,7 +65,8 @@ public class ManualDataEntry {
         }
         if (userId != null && userService.isPasswordCorrect(userId, userPassword)) {
             return userId;
-        } else  {
+        } else {
+            System.out.println(INCORRECT_LOGIN_OR_PASSWORD);
             return null;
         }
     }
@@ -139,6 +140,40 @@ public class ManualDataEntry {
         }
     }
 
+    private String getNewName() {
+        System.out.println(CHANGE_USER_NAME_MENU_TEXT);
+        EntryDataDTO checkNewName = checkName();
+        if (!checkNewName.isValid()) {
+            if (checkNewName.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
+            System.out.println(USER_NAME_EXISTS_MSG);
+            return null;
+        } else  {
+            if (checkNewName.entryData() == null) {
+                System.out.println(WRONG_USER_NAME_FORMAT_MSG);
+            }
+            return checkNewName.entryData();
+        }
+    }
+    private String getNewEmail() {
+        System.out.println(CHANGE_USER_NAME_MENU_TEXT);
+        EntryDataDTO checkNewEmail = checkEmail();
+        if (!checkNewEmail.isValid()) {
+            if (checkNewEmail.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
+            System.out.println(USER_EMAIL_EXISTS_MSG);
+            return null;
+        } else  {
+            if (checkNewEmail.entryData() == null) {
+                System.out.println(WRONG_USER_EMAIL_FORMAT_MSG);
+            }
+            return checkNewEmail.entryData();
+        }
+    }
     private EntryDataDTO checkName() {
         Scanner scanner = new Scanner(System.in);
         String newName = scanner.next();
@@ -190,17 +225,17 @@ public class ManualDataEntry {
     private EntryDataDTO checkPassword(String userId) {
         Scanner scanner = new Scanner(System.in);
         String password = scanner.next();
-        boolean isCorrect;
         if (password.equals("0")) {
             return new EntryDataDTO(false, "0");
         } else {
-            isCorrect = userService.isPasswordCorrect(userId, password);
+            boolean isCorrect = userService.isPasswordCorrect(userId, password);
             if (isCorrect) {
                 return new EntryDataDTO(true, password);
             }
             return new EntryDataDTO(false, null);
         }
     }
+
 
     private EntryDataDTO checkAndConfirmNewPassword() {
         Scanner scanner = new Scanner(System.in);
@@ -222,7 +257,5 @@ public class ManualDataEntry {
                     new EntryDataDTO(true, newPassword) :
                     new EntryDataDTO(true, null);
         }
-
-
     }
 }

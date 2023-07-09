@@ -31,6 +31,12 @@ public class AuthorizationMenuText {
     public final static String AUTHORIZATION_GET_USER_NAME_MENU_TEXT = """
             Введите имя пользователя или e-mail:
             0. Отмена.""";
+    public final static String CHANGE_USER_NAME_MENU_TEXT = """
+            Введите новое имя пользователя:
+            0. Отмена.""";
+    public final static String CHANGE_USER_EMAIL_MENU_TEXT = """
+            Введите новый E-mail:
+            0. Отмена.""";
     public final static String AUTHORIZATION_GET_USER_PASSWORD_MENU_TEXT = """
             Введите пароль:
             0. Отмена.""";
