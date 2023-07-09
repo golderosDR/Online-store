@@ -1,5 +1,6 @@
 package de.ait_tr.manualentry;
 
+import de.ait_tr.dtos.EntryDataDTO;
 import de.ait_tr.dtos.NewUserDTO;
 import de.ait_tr.mappers.UserDTOMapper;
 import de.ait_tr.repositories.OrderRepositoryImpl;
@@ -38,32 +39,22 @@ public class ManualDataEntry {
     public String logIn() {
         Scanner scanner = new Scanner(System.in);
         String userId,
-                userIdByName,
-                userIdByEmail,
                 userInfo,
                 userPassword;
-        boolean isPasswordCorrect;
         System.out.println(AUTHORIZATION_GET_USER_NAME_MENU_TEXT);
         userInfo = scanner.next();
         if (userInfo.equals("0")) {
             System.out.println(CANCEL_OPERATION);
             return null;
         } else {
-            userIdByName = (userService.findByName(userInfo) != null ?
-                    userService.findByName(userInfo).id() :
-                    null
-            );
-            userIdByEmail = (userService.findByEmail(userInfo) != null ?
-                    userService.findByEmail(userInfo).id() :
-                    null
-            );
-            if (userIdByName != null) {
-                userId = userIdByName;
-            } else if (userIdByEmail != null) {
-                userId = userIdByEmail;
+            if (userInfo.contains("@")) {
+                userId = userService.findByEmail(userInfo) != null ?
+                        userService.findByEmail(userInfo).id() :
+                        null;
             } else {
-                System.out.println(INCORRECT_LOGIN);
-                return null;
+                userId = userService.findByName(userInfo) != null ?
+                        userService.findByName(userInfo).id() :
+                        null;
             }
         }
         System.out.println(AUTHORIZATION_GET_USER_PASSWORD_MENU_TEXT);
@@ -71,115 +62,167 @@ public class ManualDataEntry {
         if (userPassword.equals("0")) {
             System.out.println(CANCEL_OPERATION);
             return null;
-        } else {
-            isPasswordCorrect = userService.isPasswordCorrect(userId, userPassword);
         }
-
-        if (isPasswordCorrect) {
+        if (userId != null && userService.isPasswordCorrect(userId, userPassword)) {
             return userId;
-        } else {
-            System.out.println(INCORRECT_PASSWORD);
+        } else  {
             return null;
         }
-
-
     }
 
     public NewUserDTO getNewUser() {
-        Scanner scanner = new Scanner(System.in);
-        String newUserName,
-                newUserEmail,
-                newUserPassword;
-        boolean isUserNameExists,
-                isUserNameFormatCorrect,
-                isUserEmailExists,
-                isUserEmailFormatCorrect,
-                isPasswordCorrect;
-
         System.out.println(REGISTRATION_GET_USER_NAME_MENU_TEXT);
-        newUserName = scanner.next();
-        isUserNameExists = userService.findByName(newUserName) != null;
-        if (isUserNameExists) {
+        EntryDataDTO newNameCheck = checkName();
+        if (!newNameCheck.isValid()) {
+            if (newNameCheck.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
             System.out.println(USER_NAME_EXISTS_MSG);
             return null;
-        } else  {
-            isUserNameFormatCorrect = UserNameValidator.validate(newUserName);
-            if (!isUserNameFormatCorrect) {
+        } else {
+            if (newNameCheck.entryData() == null) {
                 System.out.println(WRONG_USER_NAME_FORMAT_MSG);
                 return null;
             }
         }
-
         System.out.println(REGISTRATION_GET_USER_EMAIL_MENU_TEXT);
-        newUserEmail = scanner.next();
-        isUserEmailExists = userService.findByEmail(newUserEmail) != null;
-        if (isUserEmailExists) {
+        EntryDataDTO newEmailCheck = checkEmail();
+        if (!newEmailCheck.isValid()) {
+            if (newEmailCheck.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
             System.out.println(USER_EMAIL_EXISTS_MSG);
             return null;
         } else {
-            isUserEmailFormatCorrect = UserEmailValidator.validate(newUserEmail);
-            if (!isUserEmailFormatCorrect) {
+            if (newEmailCheck.entryData() == null) {
                 System.out.println(WRONG_USER_EMAIL_FORMAT_MSG);
                 return null;
             }
         }
-
         System.out.println(REGISTRATION_GET_USER_PASSWORD_MENU_TEXT);
-        newUserPassword = scanner.next();
-        isPasswordCorrect = PasswordComplexityValidator.validate(newUserPassword);
-        if (!isPasswordCorrect) {
+        EntryDataDTO newPasswordCheck = checkAndConfirmNewPassword();
+        if (!newPasswordCheck.isValid()) {
+            if (newPasswordCheck.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
             System.out.println(PASSWORD_COMPLEXITY_DESCRIPTION_TEXT);
             return null;
-        }
-
-        return UserDTOMapper.toNewUserDTO(newUserName, newUserEmail, newUserPassword);
-    }
-
-    public String getNewPassword(String userId) {
-        boolean isOldCorrect,
-                isNewComplex,
-                isNewPasswordsSame;
-        String newPassword;
-        String oldPassword,
-                newPasswordRepeat;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(GET_OLD_PASSWORD_SUBMENU_TEXT);
-        oldPassword = scanner.next();
-        if (oldPassword.equals("0")) {
-            System.out.println(CANCEL_OPERATION);
-            return null;
         } else {
-            isOldCorrect = userService.isPasswordCorrect(userId, oldPassword);
-            if (!isOldCorrect) {
-                System.out.println(OLD_PASSWORD_INCORRECT_MSG);
-                return null;
-            }
-        }
-        System.out.println(GET_NEW_PASSWORD_SUBMENU_TEXT);
-        newPassword = scanner.next();
-        if (newPassword.equals("0")) {
-            System.out.println(CANCEL_OPERATION);
-            return null;
-        } else {
-            isNewComplex = PasswordComplexityValidator.validate(newPassword);
-            if (!isNewComplex) {
-                System.out.println(PASSWORD_COMPLEXITY_DESCRIPTION_TEXT);
-                return null;
-            }
-        }
-        System.out.println(REPEAT_NEW_PASSWORD_SUBMENU_TEXT);
-        newPasswordRepeat = scanner.next();
-        if (newPasswordRepeat.equals("0")) {
-            System.out.println(CANCEL_OPERATION);
-            return null;
-        } else {
-            isNewPasswordsSame = newPassword.equals(newPasswordRepeat);
-            if (!isNewPasswordsSame) {
+            if (newPasswordCheck.entryData() == null) {
                 System.out.println(NEW_PASSWORDS_NOT_SAME_MSG);
                 return null;
             }
         }
-        return newPassword;
+        return UserDTOMapper.toNewUserDTO(
+                newNameCheck.entryData(),
+                newEmailCheck.entryData(),
+                newPasswordCheck.entryData()
+        );
+    }
+
+    private EntryDataDTO checkEmail() {
+        Scanner scanner = new Scanner(System.in);
+        String newEmail = scanner.next();
+        if (newEmail.equals("0")) {
+            return new EntryDataDTO(false, "0");
+        }
+        if (userService.findByEmail(newEmail) != null) {
+            return new EntryDataDTO(false, null);
+        } else {
+            if (UserEmailValidator.validate(newEmail)) {
+                return new EntryDataDTO(true, newEmail);
+            }
+            return new EntryDataDTO(true, null);
+        }
+    }
+
+    private EntryDataDTO checkName() {
+        Scanner scanner = new Scanner(System.in);
+        String newName = scanner.next();
+        if (newName.equals("0")) {
+            return new EntryDataDTO(false, "0");
+        }
+        if (userService.findByName(newName) != null) {
+            return new EntryDataDTO(false, null);
+        } else {
+            if (UserNameValidator.validate(newName)) {
+                return new EntryDataDTO(true, newName);
+            }
+            return new EntryDataDTO(true, null);
+        }
+    }
+
+    public String getNewPassword(String userId) {
+        System.out.println(GET_OLD_PASSWORD_SUBMENU_TEXT);
+        EntryDataDTO oldPasswordCheck = checkPassword(userId);
+
+        if (!oldPasswordCheck.isValid()) {
+            if (oldPasswordCheck.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
+            System.out.println(OLD_PASSWORD_INCORRECT_MSG);
+            return null;
+        }
+
+        System.out.println(GET_NEW_PASSWORD_SUBMENU_TEXT);
+        EntryDataDTO newPasswordCheck = checkAndConfirmNewPassword();
+
+        if (!newPasswordCheck.isValid()) {
+            if (newPasswordCheck.entryData().equals("0")) {
+                System.out.println(CANCEL_OPERATION);
+                return null;
+            }
+            System.out.println(PASSWORD_COMPLEXITY_DESCRIPTION_TEXT);
+            return null;
+        } else {
+            if (newPasswordCheck.entryData() == null) {
+                System.out.println(NEW_PASSWORDS_NOT_SAME_MSG);
+                return null;
+            }
+            return newPasswordCheck.entryData();
+        }
+    }
+
+    private EntryDataDTO checkPassword(String userId) {
+        Scanner scanner = new Scanner(System.in);
+        String password = scanner.next();
+        boolean isCorrect;
+        if (password.equals("0")) {
+            return new EntryDataDTO(false, "0");
+        } else {
+            isCorrect = userService.isPasswordCorrect(userId, password);
+            if (isCorrect) {
+                return new EntryDataDTO(true, password);
+            }
+            return new EntryDataDTO(false, null);
+        }
+    }
+
+    private EntryDataDTO checkAndConfirmNewPassword() {
+        Scanner scanner = new Scanner(System.in);
+        String newPassword = scanner.next();
+        if (newPassword.equals("0'")) {
+            return new EntryDataDTO(false, "0");
+        }
+        System.out.println(REPEAT_PASSWORD_SUBMENU_TEXT);
+        String newPasswordConfirmation = scanner.next();
+        if (newPasswordConfirmation.equals("0'")) {
+            return new EntryDataDTO(false, "0");
+        }
+        boolean isComplex = PasswordComplexityValidator.validate(newPassword);
+        boolean isSame = newPassword.equals(newPasswordConfirmation);
+        if (!isComplex) {
+            return new EntryDataDTO(false, null);
+        } else {
+            return isSame ?
+                    new EntryDataDTO(true, newPassword) :
+                    new EntryDataDTO(true, null);
+        }
+
+
     }
 }

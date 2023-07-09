@@ -30,7 +30,7 @@ public class AccountMenuText {
     public final static String GET_NEW_PASSWORD_SUBMENU_TEXT = """
             Введите новый пароль:
             0. Отмена.""";
-    public final static String REPEAT_NEW_PASSWORD_SUBMENU_TEXT = """
-            Повторите ввод нового пароля:
+    public final static String REPEAT_PASSWORD_SUBMENU_TEXT = """
+            Повторите ввод пароля:
             0. Отмена.""";
 }

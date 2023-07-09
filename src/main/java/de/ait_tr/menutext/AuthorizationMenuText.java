@@ -7,6 +7,7 @@ public class AuthorizationMenuText {
     public final static String GO_BACK_MSG = "<-";
     public final static String INCORRECT_LOGIN = "Неверное имя пользователя.";
     public final static String INCORRECT_PASSWORD = "Неверный пароль.";
+    public final static String INCORRECT_LOGIN_OR_PASSWORD = "Неверное имя пользователя или пароль.";
     public final static String USER_LOGIN_SUCCESS_MSG = "Авторизация прошла успешно.";
     public final static String NEW_USER_CREATION_SUCCESS_MSG = "Новый пользователь успешно создан.";
     public final static String NEW_USER_CREATION_FAIL_MSG = "Ошибка создания нового пользователя.";
